@@ -3,6 +3,14 @@ body {
   font-family: 'Poppins', 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #d4d6da;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #171717;
+    color: white;
+  }
 }
 
 code {
