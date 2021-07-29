@@ -1,0 +1,149 @@
+/* CSS files add styling rules to your content */
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  margin: 0;
+  padding: 0 0 2em 0;
+  /*
+  background-image: url('https://keissi.fi/i/34aa066993dd1a2fe11370ce96f4ea9c-1125');
+  background-size: contain;
+  backdrop-filter: blur(4px) contrast(0.5) brightness(1.7);
+  background-attachment: fixed;*/
+}
+
+h1 {
+  font-style: italic;
+  color: #373fff;
+  margin: 0 0 10px 0;
+}
+
+.yla {
+  width: calc(100% - 4em);
+  /*background-color: #FFDF5E;*/
+  margin-bottom: 1em;
+  padding-top: 2em;
+  background-color: #FFDF5E;
+  padding: 2em 2em;
+}
+.yla a {
+  display: inline-block;
+}
+
+.kontentti {
+  max-width: 800px;
+  margin-left: auto; margin-right: auto;
+  z-index: 100;
+  position: relative;
+}
+.header {
+  width: 100%;object-fit:cover;height:150px;    margin-bottom: -5px;
+}
+.keski {
+  background-color: #FFDF5E;
+  width: calc(100% - 4em);
+  padding: 2em;
+  margin-bottom: 1em;
+}
+a {
+  color: #7130B3;
+}
+li {
+  margin-bottom: 5px;
+}
+
+p {
+  line-height: 1.5em;
+  font-size: 1em;
+}
+button {
+  cursor: pointer;
+  background-color: #373fff;
+  padding: 1em;
+  color: #5DFF1F;
+  font-weight: bold;
+  font-size: 1em;
+}
+button:hover {
+  background-color:  #5DFF1F;
+  color: #373fff;
+}
+
+.kuvat {
+  display: inline-grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+      grid-column-gap: 0.3em;
+    grid-row-gap: 0.3em;
+}
+.kuvat img {
+      transition: transform 0.4s ease;
+    object-fit: cover;
+    display: block;
+    width: 100%;
+}
+
+  .naapurin-sami {
+    float: right;
+  }
+  .vladimir {
+    float: none !important;
+        margin: 0 auto;
+    display: block;
+  }
+@media only screen and (max-width: 600px) {
+  .naapurin-sami {
+    float: none !important;
+        margin: 0 auto;
+    display: block;
+  }
+  .kuvat {
+
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+
+  .kuvat {
+
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+.nt::after {
+  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+  margin: 0 3px 0 5px;
+}
+
+.keski td {
+  vertical-align: top;
+}
+
+.keski td p {
+  margin-top: 0;
+}
+
+.taustaesitys {
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: 100%;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+.tausta {
+  z-index: 5;
+  position: fixed;
+  top:0;left:0;
+  width: 100%; height: 100%;
+}
+
+img {
+  pointer-events:none;
+  -webkit-touch-callout: none;
+}
+
+a:hover {
+  background-color: orange;
+  font-style: italic;
+}
