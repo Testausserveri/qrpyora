@@ -4,8 +4,8 @@ const uuid = require('uuid');
 
 async function upload(req, res, db) {
     try {
-        if (req.file && req.body && req.body.bikeId) {
-            let bike = await db.getBike(req.body.bikeId);
+        if (req.file && req.body && req.params.bikeId) {
+            let bike = await db.getBike(req.params.bikeId);
             if (bike == null) {
                 responseUtils.responseStatus(res, 404, false, {cause: 'Bike does not exist!'})
                 return;
@@ -34,7 +34,7 @@ async function upload(req, res, db) {
                 })
 
         } else {
-            responseUtils.responseStatus(res, 400, false, {cause: 'No picture or bikeId supplied in request'})
+            responseUtils.responseStatus(res, 400, false, {cause: 'No picture supplied in request'})
         }
     } catch (e) {
         let errorUid = uuid.v4();
@@ -54,7 +54,7 @@ async function list(req, res, db) {
             let pictures = await db.getPhotosForBike(req.params.bikeId);
             responseUtils.responseStatus(res, 200, true, {pictures});
         } else {
-            responseUtils.responseStatus(res, 400, false, {cause: 'No bikeId supplied in request'})
+            responseUtils.responseStatus(res, 400, false, {cause: 'Insufficient request parameters'})
         }
     } catch (e) {
         let errorUid = uuid.v4();

@@ -18,7 +18,7 @@ app.use(cors());
 
 
 const imageRateLimit = rateLimit({
-    windowMs: 60 * 1000, // 1 min
+    windowMs: 2 * 60 * 1000, // 1 min
     max: 5,
     message: {status: false, cause: "Too many requests, try again later."}
 });
@@ -26,7 +26,7 @@ const imageRateLimit = rateLimit({
 app.get('/bikes/:bikeId/pictures', (req, res) => {pictureHandler.list(req, res, dbConnection)})
 app.get('/bikes/', (req, res) => {bikeHandler.list(req, res, dbConnection)})
 app.get('/bikes/:bikeId', (req, res) => {bikeHandler.get(req, res, dbConnection)})
-app.put('/picture/upload', imageRateLimit, upload.single('picture'),  (req, res) => {pictureHandler.upload(req, res, dbConnection)})
+app.put('/bikes/:bikeId/pictures/upload', imageRateLimit, upload.single('picture'),  (req, res) => {pictureHandler.upload(req, res, dbConnection)})
 
 
 app.get('*', function(req, res){
