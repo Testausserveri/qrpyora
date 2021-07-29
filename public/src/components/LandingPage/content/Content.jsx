@@ -18,9 +18,9 @@ export default class LandingPageContent extends React.Component {
         return <>
             <content-container>
                 <h1>hello world!</h1>
-                <QRPyoraCard>
+                <QRPyoraCard children={<>
                     <h1>sddsdsd</h1>
-                </QRPyoraCard>
+                </>}/>
             </content-container>
         </>
     }
