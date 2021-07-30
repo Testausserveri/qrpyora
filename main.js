@@ -7,6 +7,7 @@ const cors = require('cors');
 const multer = require("multer");
 const rateLimit = require("express-rate-limit");
 let upload = multer();
+const basicAuth = require('express-basic-auth');
 const dbConnection = new Database(config.db.dbname, config.db.username, config.db.password, config.db.host);
 
 const pictureHandler = require('./src/handlers/picture')
@@ -16,6 +17,9 @@ app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+global.staticPath = __dirname+'/static';
+global.nominatimUrl = config.nominatimUrl;
+
 
 const imageRateLimit = rateLimit({
     windowMs: 2 * 60 * 1000, // 1 min
@@ -23,10 +27,29 @@ const imageRateLimit = rateLimit({
     message: {status: false, cause: "Too many requests, try again later."}
 });
 
+const adminAuth = basicAuth({
+    users: config.adminUsers,
+    unauthorizedResponse: () => {
+        return {'status': false, 'cause': "Unauthorized"};
+    }
+});
+
+// Admin functions
+app.put('/bikes', adminAuth, (req, res) => {bikeHandler.put(req, res, dbConnection)})
+app.get('/bikes/admin', adminAuth, (req, res) => {bikeHandler.list(req, res, dbConnection, true)})
+app.delete('/bikes/admin/:bikeId', (req, res) => {bikeHandler.deleteBike(req, res, dbConnection)})
+app.get('/bikes/admin/:bikeId', adminAuth, (req, res) => {bikeHandler.get(req, res, dbConnection, true)})
+app.delete('/pictures/:id', (req, res) => {pictureHandler.deletePicture(req, res, dbConnection)})
+app.put('/bikes/admin/:bikeId/location', adminAuth, (req, res) => {bikeHandler.putLocation(req, res, dbConnection)})
+app.delete('/location/:id', adminAuth, (req, res) => {bikeHandler.deleteLocation(req, res, dbConnection)})
+
+// Public functions
+app.use('/static', express.static(__dirname + '/static'))
 app.get('/bikes/:bikeId/pictures', (req, res) => {pictureHandler.list(req, res, dbConnection)})
-app.get('/bikes/', (req, res) => {bikeHandler.list(req, res, dbConnection)})
+app.get('/bikes', (req, res) => {bikeHandler.list(req, res, dbConnection)})
 app.get('/bikes/:bikeId', (req, res) => {bikeHandler.get(req, res, dbConnection)})
-app.put('/bikes/:bikeId/pictures/upload', imageRateLimit, upload.single('picture'),  (req, res) => {pictureHandler.upload(req, res, dbConnection)})
+app.get('/bikes/:bikeId/all', (req, res) => {bikeHandler.get(req, res, dbConnection)})
+app.put('/bikes/:bikeId/pictures/upload', imageRateLimit,  upload.single('picture'),  (req, res) => {pictureHandler.upload(req, res, dbConnection)})
 
 
 app.get('*', function(req, res){

@@ -5,7 +5,7 @@ const uuid = require('uuid');
 async function upload(req, res, db) {
     try {
         if (req.file && req.body && req.params.bikeId) {
-            let bike = await db.getBike(req.params.bikeId);
+            let bike = await db.getBike(req.params.bikeId, true);
             if (bike == null) {
                 responseUtils.responseStatus(res, 404, false, {cause: 'Bike does not exist!'})
                 return;
@@ -16,7 +16,7 @@ async function upload(req, res, db) {
             }
             const { buffer } = req.file;
             let fileName = uuid.v4()+".jpg";
-            let picture = await db.addPicture(fileName, req.body.bikeId);
+            let picture = await db.addPicture(fileName, req.params.bikeId);
             await sharp(buffer)
                 .metadata()
                 .then(meta => {
@@ -63,8 +63,29 @@ async function list(req, res, db) {
     }
 }
 
+async function deletePicture(req, res, db) {
+    try {
+        if (req.params.id) {
+            let picture = await db.getLocation(req.params.id);
+            if (picture == null) {
+                responseUtils.responseStatus(res, 404, false, {cause: 'Location does not exist!'})
+                return;
+            }
+            await db.deleteLocation(req.params.id);
+            responseUtils.responseStatus(res, 200, true);
+        } else {
+            responseUtils.responseStatus(res, 400, false, {cause: 'Insufficient request parameters'})
+        }
+    } catch (e) {
+        let errorUid = uuid.v4();
+        console.error(errorUid, ": ", e);
+        responseUtils.responseStatus(res, 500, false, {cause: 'Internal server error, id: '+errorUid})
+    }
+}
+
 
 module.exports = {
     upload,
-    list
+    list,
+    deletePicture
 }
