@@ -11,6 +11,10 @@ h1, h2 {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
 }
 
 .imgGallery img {
