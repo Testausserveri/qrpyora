@@ -37,7 +37,9 @@ export default function Header() {
         <Center>
             <header>    
                 <div className="logoContainer">
-                    <img src={logo} alt="QR-pyörä" />
+                    <Link to="/">
+                        <img src={logo} alt="QR-pyörä" />
+                    </Link>
                 </div>
                 <nav>
                     <ul>
