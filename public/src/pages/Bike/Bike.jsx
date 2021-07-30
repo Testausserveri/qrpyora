@@ -38,7 +38,7 @@ export default function BikePage({bikes}) {
                 </div>
             </div>
         </Center>
-        <Center wide>
+        <Center wider>
             <MapContainer center={[bike.lat, bike.lon]} zoom={12} scrollWheelZoom={true} className="bikeMap">
                 <TileLayer
                     attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
@@ -53,7 +53,7 @@ export default function BikePage({bikes}) {
         <Center>
             <h2>Kaikki kuvat</h2>
         </Center>
-        <Center wide>
+        <Center wider>
             <PhotoGrid photos={bike.previewPhotos}/>
         </Center>
     </>

@@ -18,6 +18,18 @@
 }
 
 .bikeDetails span {
-    font-family: 'Roboto';
     color: rgba(0,0,0,0.82);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 550px) {
+    .bikeHeader {
+        flex-direction: column;
+        line-height: 1.5;
+    }
+    .bikeHeader button {
+        margin-top: 2rem;
+        margin-bottom: 0;
+    }
 }
