@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import './BikeCard.css'
 import QRPyoraCard from "../../../../../components/card/Card";

@@ -1,0 +1,30 @@
+.photoGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 0.5rem;
+    width: 100%;
+}
+
+.photo {
+    position: relative;
+}
+.photo img {
+    width: 100%;   
+    object-fit: cover;
+    /*aspect-ratio: 1 / 1;*/
+    border-radius: 8px;
+    height: 100%;
+    position: absolute;
+}
+
+.photo::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+@media only screen and (max-width: 650px) {
+    .photoGrid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

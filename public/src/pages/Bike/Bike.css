@@ -1,0 +1,23 @@
+.bikeHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bikeHeader button {
+    height: 100%;
+}
+
+.bikeDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bikeDetails h2 {
+    margin: 0;
+}
+
+.bikeDetails span {
+    font-family: 'Roboto';
+    color: rgba(0,0,0,0.82);
+}

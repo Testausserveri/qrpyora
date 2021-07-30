@@ -1,8 +1,65 @@
-qrpyora-header {
+header {
     display: flex;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
+    justify-content: space-between;
+    margin: 3rem 0 0 0;
+}
+
+header .logoContainer img {
+    height: 70px;
+}
+
+header nav {
+    display: flex;
     align-items: center;
-    flex-direction: column;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+header li {
+    font-family: 'Red Rose', cursive;
+    background-color: #DBDBDB;
+    border-radius: 8px;
+    padding: 1rem;
+    display: inline-block;
+    color: black;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-left: 0.7rem;
+    transition: background-color 0.1s;
+}
+
+header li.selected {
+    background-color: white;
+}
+
+header li.selected:hover {
+    background-color: #F7F7F7;
+}
+
+header li:not(.selected):hover {
+    background-color: transparent;
+}
+
+@media only screen and (max-width: 550px) {
+    header {
+        flex-direction: column;
+    }
+    header .logoContainer {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 3rem;
+    }
+    header nav {
+        justify-content: space-around;
+    }
+    header li {
+        font-size: 1rem;
+    }
+    header ul a:nth-child(1) li {
+        margin-left: 0;
+    }
 }

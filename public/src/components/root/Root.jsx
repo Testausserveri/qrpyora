@@ -16,10 +16,10 @@ export default class Root extends React.Component {
 
     render() {
         return <>
-            <root-container>
+            <div className="root">
                 <Header/>
                 {this.props.children}
-            </root-container>
+            </div>
         </>
     }
 }
