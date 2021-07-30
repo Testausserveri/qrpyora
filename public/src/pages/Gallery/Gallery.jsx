@@ -17,14 +17,14 @@ function BikeCard({data}) {
         </Link>
     )
 }
-export default function FrontPageContent({bikes}) {
+export default function GalleryPage({bikes}) {
     return <>
         <Center>
             <h2>Kaikki QR-pyörät</h2>
         </Center>
         <Center wider>
             <div className="bikeGridView">
-                {bikes.map(bike => <BikeCard data={bike} />)}
+                {bikes.map(bike => <BikeCard key={bike.bikeId} data={bike} />)}
             </div>
         </Center>
     </>

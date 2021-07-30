@@ -51,17 +51,16 @@ export default function BikePage({bikes}) {
                     attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
                     url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
                 />
-
-                {bikes.map(marker => (
-                    <Marker position={[bike.lat, bike.lon]} icon={bikeIcon}></Marker>
-                ))}
+                <Marker position={[bike.lat, bike.lon]} icon={bikeIcon}></Marker>
             </MapContainer>
         </Center>
         <Center>
             <h2>Kaikki kuvat</h2>
         </Center>
         <Center wider>
-            <PhotoGrid photos={bike.previewPhotos}/>
+            <div className="bikePhotos">
+                <PhotoGrid photos={bike.previewPhotos}/>
+            </div>
         </Center>
     </>
 }
