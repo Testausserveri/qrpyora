@@ -11,6 +11,8 @@
 
 .photo {
     position: relative;
+    background-color: #ccc;
+    border-radius: 8px;
 }
 .photo img {
     width: 100%;   

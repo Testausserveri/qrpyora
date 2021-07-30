@@ -80,13 +80,24 @@ export default function BikePage({bikes}) {
                 <Marker position={[latestLocation.lat, latestLocation.lon]} icon={bikeIcon}></Marker>
             </MapContainer>
         </Center>
-        <Center>
-            <h2>Kaikki kuvat</h2>
-        </Center>
-        <Center wider>
-            <div className="bikePhotos">
-                <PhotoGrid photos={bikeData.photos.map(p => p.fileName)}/>
-            </div>
-        </Center>
+        { bikeData.photos.length > 0 ? 
+            <>
+                <Center>
+                    <h2>Kaikki kuvat</h2>
+                </Center>
+                <Center wider>
+                    <div className="bikePhotos">
+                        <PhotoGrid photos={bikeData.photos.map(p => p.fileName)}/>
+                    </div>
+                </Center>
+            </>
+            :
+            <Center>
+                <p>
+                    Tähän QR-pyörään ei ole lisätty vielä yhtäkään kuvaa. Käy etsimässä polkupyörä ollaksesi ensimmäinen!
+                </p>
+            </Center>
+        }
+        
     </>
 }

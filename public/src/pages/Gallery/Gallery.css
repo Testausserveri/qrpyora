@@ -43,10 +43,10 @@
     background-color: #F7F7F7;
 }
 
-.bikeCard .photoGrid .photo:nth-child(4) {
+.bikeCard .photoGrid .photo:not(.emptyPhoto):nth-child(4) {
     position: relative;
 }
-.bikeCard .photoGrid .photo:nth-child(4)::before {
+.bikeCard .photoGrid .photo:not(.emptyPhoto):nth-child(4)::before {
     z-index: 3;
     counter-reset: photo-count var(--photo-count);
     content: counter(photo-count) '+';
@@ -60,7 +60,7 @@
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
 }
-.bikeCard .photoGrid .photo:nth-child(4)::after {
+.bikeCard .photoGrid .photo:not(.emptyPhoto):nth-child(4)::after {
     z-index: 2;
     content: '';
     position: absolute;

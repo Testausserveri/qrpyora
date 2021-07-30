@@ -6,15 +6,20 @@ import { Link } from 'react-router-dom';
 
 
 function BikeCard({data}) {
+    // Fill missing photo slots, if there is >4
+
+    let bike = {...data};
+    if (bike.photos.length !== 4) bike.photos = [...bike.photos, ...Array(4 - bike.photos.length).fill(null)];
+
     return (
-        <Link to={`/bikes/${data.id}`}>
-            <div className="bikeCard" style={{'--photo-count': data.photosCount - 4}}>
+        <Link to={`/bikes/${bike.id}`}>
+            <div className="bikeCard" style={{'--photo-count': bike.photosCount - 4}}>
                 <PhotoGrid 
-                    photos={data.photos} columns={2} />
-                {data.location ?
+                    photos={bike.photos} columns={2} />
+                {bike.location ?
                     <>
-                        <h3>{data.name}</h3>
-                        <span>{data.location.name}</span>
+                        <h3>{bike.name}</h3>
+                        <span>{bike.location.name}</span>
                     </>
                 : null}
             </div>

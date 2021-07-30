@@ -5,10 +5,14 @@ import LazyLoad from 'react-lazyload';
 
 function Photo({photoId}) {
     return (
-        <div className="photo">
-            <LazyLoad>
-                <img src={`//images.weserv.nl/?url=${api.getPhotoUrl(photoId)}&w=300`} alt="QR-bike photo" />
-            </LazyLoad>
+        <div className={"photo" + (!photoId ? " emptyPhoto" : "")}>
+            {photoId ?
+                <LazyLoad>
+                    <img src={`//images.weserv.nl/?url=${api.getPhotoUrl(photoId)}&w=300`} alt="QR-bike photo" />
+                </LazyLoad>
+            :
+                null
+            }
         </div>
     )
 }
