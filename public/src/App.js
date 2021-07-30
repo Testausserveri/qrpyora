@@ -4,6 +4,7 @@ import FrontPage from "./pages/FrontPage/FrontPage";
 import FaqPage from "./pages/Faq/Faq";
 import GalleryPage from "./pages/Gallery/Gallery";
 import BikePage from "./pages/Bike/Bike";
+import Header from "./components/common/header/Header";
 
 import { useState, useEffect } from 'react';
 
@@ -43,6 +44,7 @@ function App() {
       <>
         <Router>
           <ScrollToTop />
+          <Header />
           <Switch>
             <Route exact path="/" render={() => <FrontPage bikes={bikes} />}/>
             <Route exact path="/gallery" render={() => <GalleryPage bikes={bikes} />}/>

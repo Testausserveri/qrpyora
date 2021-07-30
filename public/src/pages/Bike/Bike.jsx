@@ -1,4 +1,3 @@
-import Header from '../../components/common/header/Header';
 import React from "react";
 import Center from "../../components/common/center/Center";
 import { useParams } from 'react-router-dom';
@@ -30,7 +29,6 @@ export default function BikePage({bikes}) {
     }
 
     return <>
-        <Header />
         <Center>
             <div className="bikeHeader">
                 <div className="bikeDetails">

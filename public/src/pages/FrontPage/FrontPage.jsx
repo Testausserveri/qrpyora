@@ -1,4 +1,3 @@
-import Header from '../../components/common/header/Header';
 import React from "react";
 import Center from "../../components/common/center/Center";
 import './FrontPage.css'
@@ -26,7 +25,6 @@ const featuredPhotos = [
 export default function FrontPageContent({bikes}) {
     const history = useHistory();
     return <>
-        <Header />
         <Center wider>
             <MapContainer center={[61.0379992, 25.6290388]} zoom={6} scrollWheelZoom={false} className="bikeMap">
                 <TileLayer

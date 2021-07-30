@@ -1,4 +1,3 @@
-import Header from '../../components/common/header/Header';
 import React from "react";
 import Center from "../../components/common/center/Center";
 import './Gallery.css'
@@ -20,7 +19,6 @@ function BikeCard({data}) {
 }
 export default function FrontPageContent({bikes}) {
     return <>
-        <Header />
         <Center>
             <h2>Kaikki QR-pyörät</h2>
         </Center>
