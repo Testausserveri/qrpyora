@@ -1,7 +1,8 @@
 import React from "react";
 import './Content.css'
+import BikeSelector from "./selector/BikeSelector";
 
-export default class LandingPageContent extends React.Component {
+export default class BikesContent extends React.Component {
 
 
     constructor(props, context) {
@@ -16,7 +17,7 @@ export default class LandingPageContent extends React.Component {
     render() {
         return <>
             <content-container>
-                <h1>test123</h1>
+                <BikeSelector/>
             </content-container>
         </>
     }

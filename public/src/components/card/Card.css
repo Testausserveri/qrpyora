@@ -1,0 +1,24 @@
+.card-frame {
+    padding: 20px;
+    border-radius: 6px;
+    background: white;
+    width: min-content;
+    box-shadow: 4px 4px 1px #222;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card-frame:hover {    box-shadow: 1px 1px 1px #222;}
+
+
+@media (prefers-color-scheme: dark) {
+    .card-frame {
+        background: black;
+        box-shadow: 4px 4px 1px #777777;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    .card-frame:hover {    box-shadow: 1px 1px 1px #777777;}
+}
+
+
+
+

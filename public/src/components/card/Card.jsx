@@ -3,9 +3,8 @@ import './Card.css'
 
 export default class QRPyoraCard extends React.Component {
     render() {
-        const {child} = this.props;
-        return <cardFrame>
-            {child}
-        </cardFrame>
+        return <div className="card-frame">
+            {this.props.children}
+        </div>
     }
 }
