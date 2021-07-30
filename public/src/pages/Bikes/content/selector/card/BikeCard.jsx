@@ -1,6 +1,6 @@
 import React from "react";
-import QRPyoraCard from "../../../../card/Card";
 import './BikeCard.css'
+import QRPyoraCard from "../../../../../components/card/Card";
 
 export class BikeCard extends React.Component {
     render() {

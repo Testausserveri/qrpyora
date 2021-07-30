@@ -1,7 +1,6 @@
 import React from 'react';
-import './LadingPage.css'
-import Header from "./header/Header";
 import LandingPageContent from "./content/Content";
+import Root from "../../components/root/Root";
 
 export default class LandingPage extends React.Component {
 
@@ -17,10 +16,9 @@ export default class LandingPage extends React.Component {
 
     render() {
         return <>
-            <landing-container>
-                <Header/>
+            <Root>
                 <LandingPageContent/>
-            </landing-container>
+            </Root>
         </>
     }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
-import './Bikes.css'
-import Header from "./header/Header";
 import BikesContent from "./content/Content";
+import Root from "../../components/root/Root";
 
 export default class Bikes extends React.Component {
 
@@ -17,10 +16,9 @@ export default class Bikes extends React.Component {
 
     render() {
         return <>
-            <bikes-container>
-                <Header/>
+            <Root>
                 <BikesContent/>
-            </bikes-container>
+            </Root>
         </>
     }
 }

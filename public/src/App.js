@@ -1,7 +1,7 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import LandingPage from "./components/LandingPage/LandingPage";
-import Bikes from "./components/Bikes/Bikes";
+import LandingPage from "./pages/LandingPage/LandingPage";
+import Bikes from "./pages/Bikes/Bikes";
 
 
 function App() {

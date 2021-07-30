@@ -1,4 +1,4 @@
-landing-container {
+root-container {
     display: flex;
     width: 100%;
     height: 100%;
@@ -7,7 +7,7 @@ landing-container {
     align-content: center;
 }
 
-landing-container > * {
+root-container > * {
     width: 95%;
     flex: 0 0;
 }
