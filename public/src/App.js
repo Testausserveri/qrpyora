@@ -1,11 +1,21 @@
 import './App.css';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom';
 import FrontPage from "./pages/FrontPage/FrontPage";
 import FaqPage from "./pages/Faq/Faq";
 import GalleryPage from "./pages/Gallery/Gallery";
 import BikePage from "./pages/Bike/Bike";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const [bikes] = useState([
@@ -32,6 +42,7 @@ function App() {
   return (
       <>
         <Router>
+          <ScrollToTop />
           <Switch>
             <Route exact path="/" render={() => <FrontPage bikes={bikes} />}/>
             <Route exact path="/gallery" render={() => <GalleryPage bikes={bikes} />}/>
