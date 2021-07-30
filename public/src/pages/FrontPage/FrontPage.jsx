@@ -32,12 +32,13 @@ export default function FrontPage({bikes}) {
                     url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
                 />
 
-                {bikes.map(marker => (
-                    <Marker key={marker.bikeId} position={[marker.lat, marker.lon]} icon={bikeIcon} eventHandlers={{
-                        click: () => { history.push(`/bikes/${marker.bikeId}`) },
+                {bikes.map(marker => {
+                    if (!marker.location) return null;
+                    return <Marker key={marker.id} position={[marker.location.lat, marker.location.lon]} icon={bikeIcon} eventHandlers={{
+                        click: () => { history.push(`/bikes/${marker.id}`) },
                       }}>
-                    </Marker>
-                ))}
+                    </Marker>;
+                })}
             </MapContainer>
         </Center>
         <Center>

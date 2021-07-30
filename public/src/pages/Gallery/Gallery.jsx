@@ -7,12 +7,16 @@ import { Link } from 'react-router-dom';
 
 function BikeCard({data}) {
     return (
-        <Link to={`/bikes/${data.bikeId}`}>
+        <Link to={`/bikes/${data.id}`}>
             <div className="bikeCard" style={{'--photo-count': data.photoCount - 4}}>
                 <PhotoGrid 
-                    photos={data.previewPhotos} columns={2} />
-                <h3>{data.city}</h3>
-                <span>{data.locationName}</span>
+                    photos={data.photos} columns={2} />
+                {data.location ?
+                    <>
+                        <h3>{data.name}</h3>
+                        <span>{data.location.name}</span>
+                    </>
+                : null}
             </div>
         </Link>
     )
@@ -24,7 +28,7 @@ export default function GalleryPage({bikes}) {
         </Center>
         <Center wider>
             <div className="bikeGridView">
-                {bikes.map(bike => <BikeCard key={bike.bikeId} data={bike} />)}
+                {bikes.map(bike => <BikeCard key={bike.id} data={bike} />)}
             </div>
         </Center>
     </>
