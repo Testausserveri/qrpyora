@@ -1,0 +1,13 @@
+{
+  "db": {
+    "dbname": "",
+    "username": "",
+    "password": "",
+    "host": ""
+  },
+  "adminUsers": {
+    "admin": "admin1234"
+  },
+  "_comment": "URL to nominatim API server",
+  "nominatimUrl": ""
+}
