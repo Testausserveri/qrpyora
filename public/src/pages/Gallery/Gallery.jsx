@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function BikeCard({data}) {
     return (
         <Link to={`/bikes/${data.id}`}>
-            <div className="bikeCard" style={{'--photo-count': data.photoCount - 4}}>
+            <div className="bikeCard" style={{'--photo-count': data.photosCount - 4}}>
                 <PhotoGrid 
                     photos={data.photos} columns={2} />
                 {data.location ?

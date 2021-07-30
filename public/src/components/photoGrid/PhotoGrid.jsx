@@ -1,11 +1,14 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import api from '../../api/api';
 import './PhotoGrid.css';
+import LazyLoad from 'react-lazyload';
 
 function Photo({photoId}) {
     return (
         <div className="photo">
-            <img src={`//images.weserv.nl/?url=${api.getPhotoUrl(photoId)}&w=300`} alt="Featured QR-bike photo" />
+            <LazyLoad>
+                <img src={`//images.weserv.nl/?url=${api.getPhotoUrl(photoId)}&w=300`} alt="QR-bike photo" />
+            </LazyLoad>
         </div>
     )
 }
