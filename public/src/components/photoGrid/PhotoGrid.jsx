@@ -12,7 +12,7 @@ export default function PhotoGrid({photos, columns}) {
     return (
         <div className="photoGrid" style={columns ? {gridTemplateColumns: `${'1fr '.repeat(columns)}`}: null}>
             {photos.map(photo => (
-                <Photo photoId={photo} />
+                <Photo key={photo} photoId={photo} />
             ))}
         </div>
     );

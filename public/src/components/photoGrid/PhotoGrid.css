@@ -5,6 +5,10 @@
     width: 100%;
 }
 
+.bikePhotos .photoGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
 .photo {
     position: relative;
 }
@@ -26,5 +30,8 @@
 @media only screen and (max-width: 650px) {
     .photoGrid {
         grid-template-columns: 1fr 1fr 1fr;
+    }
+    .bikePhotos .photoGrid {
+        grid-template-columns: 1fr 1fr;
     }
 }

@@ -22,7 +22,7 @@ const featuredPhotos = [
     '652', '691', '697', '724'
 ];
 
-export default function FrontPageContent({bikes}) {
+export default function FrontPage({bikes}) {
     const history = useHistory();
     return <>
         <Center wider>
@@ -33,7 +33,7 @@ export default function FrontPageContent({bikes}) {
                 />
 
                 {bikes.map(marker => (
-                    <Marker position={[marker.lat, marker.lon]} icon={bikeIcon} eventHandlers={{
+                    <Marker key={marker.bikeId} position={[marker.lat, marker.lon]} icon={bikeIcon} eventHandlers={{
                         click: () => { history.push(`/bikes/${marker.bikeId}`) },
                       }}>
                     </Marker>
