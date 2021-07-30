@@ -20,6 +20,15 @@ export default function BikePage({bikes}) {
     const { bikeId } = useParams();
     const bike = bikes.find(b => b.bikeId.toString() === bikeId);
 
+    let mapUrl = `https://www.google.com/maps/search/?api=1&query=${bike.lat},${bike.lon}`;
+    let mapText = 'Avaa Google Mapsissa';
+
+    // Check for Apple device
+    if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        mapUrl = `https://maps.apple.com/?ll=${bike.lat},${bike.lon}`;
+        mapText = 'Avaa Apple Mapsissa';
+    }
+
     return <>
         <Header />
         <Center>
@@ -30,9 +39,9 @@ export default function BikePage({bikes}) {
                     <span>{formatcoords(bike.lat, bike.lon).format()}</span>
                 </div>
                 <div>
-                    <a href={`https://www.google.com/maps/search/?api=1&query=${bike.lat},${bike.lon}`} target="_blank" rel="noreferrer">
+                    <a href={mapUrl} target="_blank" rel="noreferrer">
                         <button>
-                            <span>Avaa Google Mapsissa</span>
+                            <span>{mapText}</span>
                         </button>
                     </a>
                 </div>
