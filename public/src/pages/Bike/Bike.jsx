@@ -25,7 +25,7 @@ export default function BikePage({bikes}) {
 
     // Check for Apple device
     if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        mapUrl = `https://maps.apple.com/?ll=${bike.lat},${bike.lon}`;
+        mapUrl = `https://maps.apple.com/?q=${bike.lat},${bike.lon}`;
         mapText = 'Avaa Apple Mapsissa';
     }
 
