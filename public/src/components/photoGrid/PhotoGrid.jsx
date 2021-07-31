@@ -8,7 +8,7 @@ function Photo({media, fullUrl}) {
     let photo = media;
     let video;
 
-    if (typeof media === 'object') {
+    if (media?.video) {
         photo = media.image
         video = media.video;
     };
