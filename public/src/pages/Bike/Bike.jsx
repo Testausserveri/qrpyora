@@ -74,7 +74,6 @@ export default function BikePage({bikes}) {
         <Center wider>
             <MapContainer center={[latestLocation.lat, latestLocation.lon]} zoom={12} scrollWheelZoom={true} className="bikeMap">
                 <TileLayer
-                    attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
                     url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
                 />
                 <Marker position={[latestLocation.lat, latestLocation.lon]} icon={bikeIcon}></Marker>
