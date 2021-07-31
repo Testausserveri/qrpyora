@@ -57,7 +57,7 @@ p {
     }
 }
 
-button {
+button:not(.ReactModalPortal button) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -74,12 +74,12 @@ button {
     transition: background-color 0.1s;
 }
 
-button span {
+button:not(.ReactModalPortal button) span {
     text-decoration: none;
 }
 
 
-button:hover {
+button:not(.ReactModalPortal button):hover {
     background-color: #F7F7F7;
 }
 

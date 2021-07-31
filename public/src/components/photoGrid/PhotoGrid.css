@@ -13,7 +13,25 @@
     position: relative;
     background-color: #ccc;
     border-radius: 8px;
+    cursor: pointer;
 }
+.photo:not(.disabledLightbox)::before {
+    content: '';
+    background-color: rgba(255,255,255,0.2);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    position: absolute;
+    z-index: 5;
+    transition: opacity 0.15s;
+    opacity: 0;
+}
+.photo:not(.disabledLightbox):hover::before {
+    opacity: 1;
+}
+
 .photo img {
     width: 100%;   
     object-fit: cover;
