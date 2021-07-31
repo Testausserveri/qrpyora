@@ -1,0 +1,74 @@
+.bikeGridView {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media only screen and (max-width: 550px) {
+    .bikeGridView {
+        display: grid;
+        grid-gap: 1rem;
+        grid-template-columns: 1fr;
+    }
+}
+
+.bikeCard {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.1s;
+}
+
+.bikeCard .photoGrid, .bikeCard span {
+    margin-bottom: 1rem;
+}
+
+.bikeCard h3 {
+    font-family: 'Red Rose', cursive;
+    color: rgba(0,0,0,0.82);
+    font-size: 1.7rem;
+    margin: 0.5rem 0 0 0;
+}
+
+.bikeCard span {
+    font-family: 'Roboto', sans-serif;
+    color: rgba(0,0,0,0.65);
+    margin-top: 0.2rem;
+}
+
+.bikeCard:hover {
+    background-color: #F7F7F7;
+}
+
+.bikeCard .photoGrid .photo:not(.emptyPhoto):nth-child(4) {
+    position: relative;
+}
+.bikeCard .photoGrid .photo:not(.emptyPhoto):nth-child(4)::before {
+    z-index: 1;
+    counter-reset: photo-count var(--photo-count);
+    content: counter(photo-count) '+';
+    position: absolute; 
+
+    color: white;
+    left: 50%;  
+    top: 50%; 
+    transform: translate(-50%, -50%);
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+}
+
+
+.bikeCard .photoGrid .photo:not(.emptyPhoto):nth-child(4)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 100%;
+    border-radius: 8px;
+    background-color: rgba(0,0,0,0.7);
+}

@@ -66,12 +66,12 @@ async function list(req, res, db) {
 async function deletePicture(req, res, db) {
     try {
         if (req.params.id) {
-            let picture = await db.getLocation(req.params.id);
+            let picture = await db.getPicture(req.params.id);
             if (picture == null) {
-                responseUtils.responseStatus(res, 404, false, {cause: 'Location does not exist!'})
+                responseUtils.responseStatus(res, 404, false, {cause: 'Picture does not exist!'})
                 return;
             }
-            await db.deleteLocation(req.params.id);
+            await db.deletePicture(req.params.id);
             responseUtils.responseStatus(res, 200, true);
         } else {
             responseUtils.responseStatus(res, 400, false, {cause: 'Insufficient request parameters'})
