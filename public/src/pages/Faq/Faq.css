@@ -1,0 +1,29 @@
+.faqContainer h3 {
+    font-family: 'Red Rose', cursive;
+    color: #000;
+    font-size: 1.3rem;
+    margin-top: 0;
+}
+
+.faqBlock {
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 800px) {
+    .faqBlock {
+        padding: 2rem;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .faqBlock {
+        padding: 1rem;
+    }
+}
+
+#ilkivaltaAnswer .photoGrid .photo::after {
+    padding-bottom: 50%;
+}
