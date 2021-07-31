@@ -9,6 +9,7 @@ import L from 'leaflet';
 import pin from '../../assets/pin.png';
 import PhotoGrid from '../../components/photoGrid/PhotoGrid';
 import api from "../../api/api";
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
 
 const bikeIcon = new L.Icon({
     iconUrl: pin,
@@ -20,13 +21,13 @@ const bikeIcon = new L.Icon({
 export default function BikePage({bikes}) {
     const { bikeId } = useParams();
     const [ bikeData, setBikeData ] = useState({});
+    const [ apiFailed, setApiFailed ] = useState(false);
 
     // Load all bike data from server
     const loadBikeData = useCallback(async (bikeId) => {
-        let bike = await api.getBike(bikeId);
-        if (bike.id) {
-            setBikeData(bike)
-        };
+        let { bike, status } = await api.getBike(bikeId);
+        if (!status) setApiFailed(true);
+        if (bike?.id) setBikeData(bike);
     }, [setBikeData]);
 
     // Find bike data in local bike list
@@ -40,6 +41,8 @@ export default function BikePage({bikes}) {
     }, [bikes, bikeData, bikeId])
 
     useEffect(() => loadBikeData(bikeId), [bikeId, loadBikeData]);
+    console.log(bikeData)
+    if (apiFailed) return <NotFoundPage />;
     if (!bikeData.id) return null;
 
     console.log(bikeData)

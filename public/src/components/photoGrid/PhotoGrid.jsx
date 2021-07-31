@@ -19,6 +19,7 @@ function Photo({media, fullUrl, openInLightbox}) {
     const contents = <>
         {media ?
             <LazyLoad>
+                {/*change to this once in prod: <img src={`//images.weserv.nl/?url=${(fullUrl ? photo : api.getPhotoUrl(photo))}&w=300`} alt="QR-bike photo" />*/}
                 <img src={(fullUrl ? photo : `//images.weserv.nl/?url=${api.getPhotoUrl(photo)}&w=300`)} alt="QR-bike photo" />
             </LazyLoad>
         :
@@ -40,7 +41,6 @@ function Photo({media, fullUrl, openInLightbox}) {
 export default function PhotoGrid({photos, columns, fullUrl, disableLightbox}) {
     const [photoIndex, setPhotoIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    console.log("a", disableLightbox)
     const photoUrls = photos.map((media) => {
         if (!media) return null;
 

@@ -1,0 +1,27 @@
+
+.notFoundBlock {
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+
+    padding: 50px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.notFoundBlock h2 {
+    color: #fff;
+}
+.notFoundBlock img {
+    max-width: 300px;
+}
+@media only screen and (max-width: 800px) {
+    .notFoundBlock {
+        padding: 2rem;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .notFoundBlock {
+        padding: 1rem;
+    }
+}

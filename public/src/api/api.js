@@ -12,7 +12,7 @@ async function getBike(bikeId) {
     const response = await fetch(`${apiServer}/bikes/${bikeId}`).then(res => res.json());
     
     if (!response.status) return {};
-    return response.bike;
+    return response;
 }
 
 function getPhotoUrl(photoId) {

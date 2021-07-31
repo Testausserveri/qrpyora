@@ -4,6 +4,7 @@ import FrontPage from "./pages/FrontPage/FrontPage";
 import FaqPage from "./pages/Faq/Faq";
 import GalleryPage from "./pages/Gallery/Gallery";
 import BikePage from "./pages/Bike/Bike";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Header from "./components/common/header/Header";
 import Footer from './components/common/footer/Footer';
 
@@ -41,6 +42,7 @@ function App() {
             <Route exact path="/gallery" render={() => <GalleryPage bikes={bikes} />}/>
             <Route exact path="/faq" render={() => <FaqPage />}/>
             <Route path="/bikes/:bikeId" render={() => <BikePage bikes={bikes} />} />
+            <Route path='*' exact={true} render={() => <NotFoundPage />} />
           </Switch>
           <Footer />
         </Router>
