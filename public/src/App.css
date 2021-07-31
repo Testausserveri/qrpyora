@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Rose:wght@700&family=Roboto&display=swap');
 
+html {
+    scroll-behavior: smooth;
+}
+
 .center {
     padding: 0 1rem;
     max-width: 700px;
@@ -25,11 +29,15 @@ h2 {
     margin-top: 0;
 }
 
-p {
+p, ul {
     color: rgba(0,0,0,0.82);
     font-family: 'Roboto', sans-serif;
     line-height: 1.5;
     font-size: 1.2rem;
+}
+
+ul {
+    line-height: 1.7;
 }
 
 .imageParagraph {
@@ -89,8 +97,27 @@ button:not(.ReactModalPortal button):hover {
     align-items: center;
 }
 
-a:not(nav a) {
-    text-decoration: none;
-    color: black;
+a { text-decoration: none;}
+
+p a, ul a {
+    color: rgba(0,0,0,0.82);
     position: relative;
+}
+
+p a::before, ul:not(nav ul) a::before {
+    content: '';
+    position: absolute;
+    top: -0.2rem;
+    left: -0.2rem;
+    width: 100%;
+    height: 100%;
+    padding: 0.2rem;
+    background-color: rgba(0,0,0,0.04);
+    z-index: 0;
+    border-radius: 9px;
+    transition: background-color 0.1s;
+}
+
+p a:hover::before, ul:not(nav ul) a:hover::before {
+    background-color: rgba(0,0,0,0.15);
 }
