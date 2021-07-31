@@ -28,7 +28,7 @@ export default function FrontPage({bikes}) {
         <Center wider>
             <MapContainer center={[61.0379992, 25.6290388]} zoom={6} scrollWheelZoom={false} className="bikeMap">
                 <TileLayer
-                    attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
+                   
                     url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
                 />
 
@@ -70,10 +70,7 @@ export default function FrontPage({bikes}) {
                 </button>
             </Link>
             <p>
-                Verkkopalvelun tuottaa <a href="https://testausserveri.fi">Testausserveri</a>.
-            </p>
-            <p>
-                Haluatko pystyttää oman QR-pyöräsi? Liity Testausserverille ja kysy lisää!
+                Haluatko pystyttää oman QR-pyöräsi tai kiinnostaako sinua kuulla projektista lisää? Liity <a href="https://testausserveri.fi">Testausserverille</a>!
             </p>
         </Center>
     </>

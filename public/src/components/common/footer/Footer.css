@@ -1,0 +1,30 @@
+.attributions {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: rgba(0,0,0,0.82);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+hr {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.testausserveriLogo {
+    max-width: 130px;
+    opacity: 0.82;
+    transition: opacity 0.1s;
+}
+
+.testausserveriLogo:hover {
+ opacity: 1;
+}

@@ -5,6 +5,7 @@ import FaqPage from "./pages/Faq/Faq";
 import GalleryPage from "./pages/Gallery/Gallery";
 import BikePage from "./pages/Bike/Bike";
 import Header from "./components/common/header/Header";
+import Footer from './components/common/footer/Footer';
 
 import { useState, useEffect } from 'react';
 import api from './api/api';
@@ -25,7 +26,7 @@ function App() {
   async function loadBikes() {
     setBikes(await api.getAllBikes());
   }
-  
+
   useEffect(() => {
     loadBikes();
   }, [])
@@ -41,6 +42,7 @@ function App() {
             <Route exact path="/faq" render={() => <FaqPage />}/>
             <Route path="/bikes/:bikeId" render={() => <BikePage bikes={bikes} />} />
           </Switch>
+          <Footer />
         </Router>
       </>
   );
