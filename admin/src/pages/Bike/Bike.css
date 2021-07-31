@@ -1,0 +1,35 @@
+.bikeHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bikeHeader button {
+    height: 100%;
+}
+
+.bikeDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bikeDetails h2 {
+    margin: 0;
+}
+
+.bikeDetails span {
+    color: rgba(0,0,0,0.82);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 550px) {
+    .bikeHeader {
+        flex-direction: column;
+        line-height: 1.5;
+    }
+    .bikeHeader button {
+        margin-top: 2rem;
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,26 @@
+modal-button {
+    font-family: 'Red Rose', cursive;
+    background-color: #DBDBDB;
+    border-radius: 8px;
+    padding: 0.6rem;
+    display: inline-block;
+    color: black;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: background-color 0.1s;
+    margin-top: 8px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+
+.ModalOverlay {
+    z-index: 5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}

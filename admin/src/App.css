@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Rose:wght@700&family=Roboto&display=swap');
+
+.center {
+    padding: 0 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+}
+
+.center h2:nth-last-child(1) {
+    margin-bottom: 0;
+}
+
+.widerCenter {
+    padding: 0 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+}
+
+h2 {
+    font-family: 'Red Rose', cursive;
+    color: #000;
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+p {
+    color: rgba(0,0,0,0.82);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.5;
+    font-size: 1.2rem;
+}
+
+.imageParagraph {
+    display: flex;
+}
+
+.imageContainer {
+    display: flex;
+    align-items: center;
+}
+
+.imageContainer img {
+    max-width: 200px;
+}
+
+@media only screen and (max-width: 550px) {
+    .imageParagraph {
+        flex-direction: column;
+    }
+    .imageContainer {
+        justify-content: space-around;
+    }
+    .widerCenter {
+        padding-bottom: 2rem;
+    }
+}
+
+button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    border: none;
+    padding: 2rem;
+    font-family: 'Red Rose', cursive;
+    color: rgba(0,0,0,0.82);
+    cursor: pointer;
+    margin-bottom: 2rem;
+    transition: background-color 0.1s;
+}
+
+button span {
+    text-decoration: none;
+}
+
+
+button:hover {
+    background-color: #F7F7F7;
+}
+
+.buttonIcon {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+a:not(nav a) {
+    text-decoration: none;
+    color: black;
+    position: relative;
+}
+
+input[type=text], input[type=password]{
+    width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+}
+
+input[type=text]:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+}
+
+.spinner {
+    pointer-events: none;
+    width: 2.5em;
+    height: 2.5em;
+    margin: 10px;
+    border: 0.4em solid transparent;
+    border-color: #eee;
+    border-top-color: #3E67EC;
+    border-radius: 50%;
+    animation: loading-spin 1s linear infinite;
+}
+
+@keyframes loading-spin {
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
