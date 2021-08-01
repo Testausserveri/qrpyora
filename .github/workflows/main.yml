@@ -36,8 +36,8 @@ jobs:
         with:
           context: ./backend/
           push: true
-          tags: ${{ steps.meta-importer.outputs.tags }}
-          labels: ${{ steps.meta-importer.outputs.labels }}
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
           
   build-frontend:
       runs-on: ubuntu-latest
