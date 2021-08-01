@@ -1,0 +1,85 @@
+name: Build
+
+on:
+  push:
+    branches: ['main']
+    
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Extract metadata for backend
+        id: meta-backend
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/testausserveri/qrpyora/backend
+
+      - name: Build and push backend Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend/
+          push: true
+          tags: ${{ steps.meta-importer.outputs.tags }}
+          labels: ${{ steps.meta-importer.outputs.labels }}
+          
+  build-frontend:
+      runs-on: ubuntu-latest
+      permissions:
+        contents: read
+        packages: write
+
+      steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for frontend
+        id: meta-frontend
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/testausserveri/qrpyora/frontend
+          
+      - name: Build public/ React app
+        run: |
+          cd frontend/public/
+          npm i
+          npm run build
+          cd ../../
+          
+      - name: Build admin/ React app
+        run: |
+          cd frontend/admin/
+          npm i
+          npm run build
+          cd ../../
+          
+      - name: Build and push frontend Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend/
+          push: true
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          labels: ${{ steps.meta-frontend.outputs.labels }}
