@@ -1,5 +1,5 @@
 import Auth from './auth'
-const apiServer = 'https://fb96cc3f9412.ngrok.io'
+const apiServer = '/api/'
 
 const getAuthHeaders = (auth) => {
     let headers = new Headers();

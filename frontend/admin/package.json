@@ -1,6 +1,7 @@
 {
   "name": "public",
   "version": "0.1.0",
+  "homepage": "/admin/",
   "private": true,
   "dependencies": {
     "@react-leaflet/core": ">=1.0.0 <1.1.0 || ^1.1.1",
