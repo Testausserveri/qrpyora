@@ -24,7 +24,7 @@ function Photo({photoId, onDelete, edit}) {
                         </div> : undefined}
 
                         <LazyLoad>
-                            <img src={`//images.weserv.nl/?url=${api.getPhotoUrl(photoId)}&w=300`} alt="QR-bike photo" />
+                            <img src={`//images.weserv.nl/?url=${api.getPhotoUrl(photoId)}&w=300`} alt="QR-bike" />
                         </LazyLoad>
                     </>
                     :
