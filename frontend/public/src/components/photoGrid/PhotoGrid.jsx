@@ -20,7 +20,7 @@ function Photo({media, fullUrl, openInLightbox}) {
         {media ?
             <LazyLoad>
                 {/*change to this once in prod: <img src={`//images.weserv.nl/?url=${(fullUrl ? photo : api.getPhotoUrl(photo))}&w=300`} alt="QR-bike photo" />*/}
-                <img src={(fullUrl ? photo : `//images.weserv.nl/?url=${api.getPhotoUrl(photo)}&w=300`)} alt="QR-bike photo" />
+                <img src={(fullUrl ? photo : `//images.weserv.nl/?url=${api.getPhotoUrl(photo)}&w=300`)} alt="QR-bike" />
             </LazyLoad>
         :
             null
