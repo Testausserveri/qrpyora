@@ -129,3 +129,49 @@ input[type=text]:focus{
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    button:not(.ReactModalPortal button):hover {
+        background-color: #212121;
+    }
+
+    button:not(.ReactModalPortal button) {
+        background-color: #313131;
+        color: rgba(255,255,255,0.82);
+    }
+
+    p a, ul a {
+        color: rgba(255,255,255,0.82);
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    p a:hover::before, ul:not(nav ul) a:hover::before {
+        background-color: rgba(19, 19, 19, 0.15);
+    }
+
+    h2 {
+        font-family: 'Red Rose', cursive;
+        color: #fff;
+        font-size: 2rem;
+        margin-top: 0;
+    }
+
+    a:not(nav a) {
+        color: white;
+    }
+
+    p, ul {
+        color: rgba(255,255,255,0.82);
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.5;
+        font-size: 1.2rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+
+
+}
+

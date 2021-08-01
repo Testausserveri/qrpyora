@@ -27,3 +27,13 @@
 #ilkivaltaAnswer .photoGrid .photo::after {
     padding-bottom: 50%;
 }
+
+@media (prefers-color-scheme: dark) {
+    .faqBlock {
+        background-color: #313131;
+    }
+
+    .faqContainer h3 {
+        color: #ffffff;
+    }
+}

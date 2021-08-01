@@ -25,3 +25,9 @@
         padding: 1rem;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    .notFoundBlock {
+        background: radial-gradient(circle, rgb(30, 31, 49) 0%, rgb(66, 27, 37) 100%);
+    }
+}

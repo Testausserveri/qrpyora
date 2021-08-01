@@ -28,3 +28,12 @@ footer {
 .testausserveriLogo:hover {
  opacity: 1;
 }
+
+@media (prefers-color-scheme: dark) {
+    .testausserveriLogo {
+        filter: invert(1);
+    }
+    .attributions {
+        color: white;
+    }
+}

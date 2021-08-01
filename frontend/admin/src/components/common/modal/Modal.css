@@ -24,3 +24,31 @@ modal-button {
     backdrop-filter: blur(6px);
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
+.ModalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    padding: 1rem;
+    background-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    modal-button {
+        background-color: #1f1f1f;
+        color: white;
+    }
+
+    .ModalOverlay {
+        background-color: rgba(37, 37, 37, 0.4);
+    }
+
+    .ModalContent {
+        background-color: rgb(0, 0, 0);
+    }
+}

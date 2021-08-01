@@ -82,3 +82,22 @@ header li:not(.selected):hover {
         margin-left: 0;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    header li {
+        background-color: #282828;
+        color: white;
+    }
+    header li.selected {
+        background-color: #3d3d3d;
+    }
+    header .logoContainer{
+        filter: invert(1);
+    }
+    header li.selected:hover {
+        background-color: #525252;
+    }
+    header li:not(.selected):hover {
+        background-color: #363636;
+    }
+}
