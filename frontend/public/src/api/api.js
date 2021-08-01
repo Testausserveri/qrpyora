@@ -1,5 +1,5 @@
-const env = var env = process.env.ENV || 'dev';
-const apiServer = env==='dev' ? global.config.apiEndpoint : '/api';
+const env = process.env.NODE_ENV==='dev' || false;
+const apiServer = env ? global.config.apiEndpoint : '/api';
 
 async function getAllBikes() {
     const response = await fetch(`${apiServer}/bikes`).then(res => res.json());

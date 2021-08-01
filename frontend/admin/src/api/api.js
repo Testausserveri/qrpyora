@@ -1,6 +1,6 @@
 import Auth from './auth'
-const env = var env = process.env.ENV || 'dev';
-const apiServer = env==='dev' ? global.config.apiEndpoint : '/api';
+const env = process.env.NODE_ENV==='dev' || false;
+const apiServer = env ? global.config.apiEndpoint : '/api';
 
 
 const getAuthHeaders = (auth) => {
