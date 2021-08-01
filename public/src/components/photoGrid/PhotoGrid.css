@@ -15,6 +15,8 @@
     border-radius: 8px;
     cursor: pointer;
 }
+
+
 .photo:not(.disabledLightbox)::before {
     content: '';
     background-color: rgba(255,255,255,0.2);
@@ -76,4 +78,10 @@
 .videoCover:hover {
     color: white;
     background-color: rgba(0,0,0,0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+    .photo {
+        background-color: #2a2a2a;
+    }
 }

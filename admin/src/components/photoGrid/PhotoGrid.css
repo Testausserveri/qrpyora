@@ -86,3 +86,9 @@
         grid-template-columns: 1fr 1fr;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    .photo {
+        background-color: #2a2a2a;
+    }
+}

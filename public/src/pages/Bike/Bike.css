@@ -33,3 +33,9 @@
         margin-bottom: 0;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    .bikeDetails span {
+        color: rgba(225, 225, 225, 0.82);
+    }
+}

@@ -1,4 +1,4 @@
-const apiServer = 'https://fb96cc3f9412.ngrok.io'
+const apiServer = 'https://1716b2cab0ec.ngrok.io'
 
 async function getAllBikes() {
     const response = await fetch(`${apiServer}/bikes`).then(res => res.json());

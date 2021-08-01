@@ -72,3 +72,17 @@
     border-radius: 8px;
     background-color: rgba(0,0,0,0.7);
 }
+
+@media (prefers-color-scheme: dark) {
+    .bikeCard h3, .bikeCard span {
+        color: rgba(255, 255, 255, 0.82);
+    }
+
+    .bikeCard {
+        background-color: #313131;
+    }
+
+    .bikeCard:hover {
+        background-color: #363636;
+    }
+}

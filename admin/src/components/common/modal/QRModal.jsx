@@ -19,18 +19,8 @@ export default function QRModal(props) {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                style={{
-                    content: {
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)',
-                        borderRadius: '20px'
-                    }
-                }}
-                overlayClassName="ModalOverlay">
+                overlayClassName="ModalOverlay"
+                className="ModalContent">
                 <h2>{props.title}</h2>
                 <hr/>
                 {props.children}
