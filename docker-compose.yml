@@ -26,6 +26,10 @@ services:
             - ./static/:/usr/src/app/static/
         depends_on:
             - db
+    phpmyadmin:
+        image: phpmyadmin
+        links:
+            - "db:db"
     frontend:
         image: ghcr.io/testausserveri/qrpyora/frontend
         ports:
