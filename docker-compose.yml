@@ -1,0 +1,35 @@
+version: "2"
+
+services:
+    db:
+        image: mariadb
+        environment:
+            MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+            MYSQL_DATABASE: ${MYSQL_NAME}
+            MYSQL_USER: ${MYSQL_USERNAME}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - 3306:3306
+        volumes:
+            - ./db_data/:/var/lib/mysql
+    backend:
+        image: ghcr.io/testausserveri/qrpyora/backend
+        environment:
+            MYSQL_NAME: ${MYSQL_NAME}
+            MYSQL_USERNAME: ${MYSQL_USERNAME}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_HOST: ${MYSQL_HOST}
+            NOMINATIM_URL: ${NOMINATIM_URL}
+        ports: 
+            - 8000:8000
+        volumes:
+            - ./static/:/usr/src/app/static/
+        depends_on:
+            - db
+    frontend:
+        image: ghcr.io/testausserveri/qrpyora/frontend
+        ports:
+            - 8080:8080
+        depends_on: 
+            - db
+            - backend

@@ -1,6 +1,16 @@
+if (!process.env.MYSQL_PASSWORD) require('dotenv').config({ path: '../.env' });
+console.log(process.env)
+
 const express = require("express");
 const {Database} = require("./db/db");
-const config = require('./config.json')
+
+// to-do: move this into db or create a docker data volume
+const config = {
+    "adminUsers": {
+      "admin": "admin1234"
+    }
+};
+
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 8000;
 const cors = require('cors');
@@ -8,7 +18,12 @@ const multer = require("multer");
 const rateLimit = require("express-rate-limit");
 let upload = multer();
 const basicAuth = require('express-basic-auth');
-const dbConnection = new Database(config.db.dbname, config.db.username, config.db.password, config.db.host);
+const dbConnection = new Database(
+    process.env.MYSQL_NAME, 
+    process.env.MYSQL_USERNAME, 
+    process.env.MYSQL_PASSWORD, 
+    process.env.MYSQL_HOST
+);
 
 const pictureHandler = require('./src/handlers/picture')
 const bikeHandler = require('./src/handlers/bikes')
@@ -18,7 +33,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 global.staticPath = __dirname+'/static';
-global.nominatimUrl = config.nominatimUrl;
+global.nominatimUrl = process.env.NOMINATIM_URL;
 
 
 const imageRateLimit = rateLimit({
@@ -29,6 +44,7 @@ const imageRateLimit = rateLimit({
 
 const adminAuth = basicAuth({
     users: config.adminUsers,
+    challenge: true,
     unauthorizedResponse: () => {
         return {'status': false, 'cause': "Unauthorized"};
     }

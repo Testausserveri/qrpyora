@@ -1,5 +1,7 @@
 import Auth from './auth'
-const apiServer = 'https://1716b2cab0ec.ngrok.io'
+const env = var env = process.env.ENV || 'dev';
+const apiServer = env==='dev' ? global.config.apiEndpoint : '/api';
+
 
 const getAuthHeaders = (auth) => {
     let headers = new Headers();

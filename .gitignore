@@ -2,3 +2,6 @@ package-lock.json
 node_modules
 config.json
 static
+db_data
+frontend/admin/build/
+.env

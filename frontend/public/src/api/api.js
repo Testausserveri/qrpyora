@@ -1,4 +1,5 @@
-const apiServer = 'https://1716b2cab0ec.ngrok.io'
+const env = var env = process.env.ENV || 'dev';
+const apiServer = env==='dev' ? global.config.apiEndpoint : '/api';
 
 async function getAllBikes() {
     const response = await fetch(`${apiServer}/bikes`).then(res => res.json());
