@@ -3,8 +3,7 @@ import Center from "../../components/common/center/Center";
 import { useParams } from 'react-router-dom';
 import './Bike.css';
 import formatcoords from 'formatcoords';
-
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import pin from '../../assets/pin.png';
 import PhotoGrid from '../../components/photoGrid/PhotoGrid';
@@ -15,19 +14,27 @@ const bikeIcon = new L.Icon({
     iconUrl: pin,
     iconRetinaUrl: pin,
     popupAnchor:  [-0, -0],
-    iconSize: [52, 52],     
+    iconSize: [52, 52],
 });
 
 export default function BikePage({bikes}) {
     const { bikeId } = useParams();
-    const [ bikeData, setBikeData ] = useState({});
     const [ apiFailed, setApiFailed ] = useState(false);
+    const [ bikeData, setBikeData ] = useState({});
+    const [ mapPos, setMapPos] = useState([0,0]);
 
     // Load all bike data from server
     const loadBikeData = useCallback(async (bikeId) => {
-        let { bike, status } = await api.getBike(bikeId);
-        if (!status) setApiFailed(true);
-        if (bike?.id) setBikeData(bike);
+        let {bike, status} = await api.getBike(bikeId);
+        console.log(bike);
+        if (!status) {
+            setApiFailed(true);
+            return;
+        }
+        if (bike.id) {
+            setBikeData(bike)
+            setMapPos([bike.location?.lat !== undefined ? bike.location?.lat: 0, bike.location?.lon !== undefined ? bike.location?.lon: 0,]);
+        }
     }, [setBikeData]);
 
     // Find bike data in local bike list
@@ -37,23 +44,24 @@ export default function BikePage({bikes}) {
 
         if (bike?.id) {
             setBikeData(bike);
+            setMapPos([bike.location?.lat !== undefined ? bike.location?.lat: 0, bike.location?.lon !== undefined ? bike.location?.lon: 0,]);
         }
     }, [bikes, bikeData, bikeId])
 
     useEffect(() => loadBikeData(bikeId), [bikeId, loadBikeData]);
-    console.log(bikeData)
+
     if (apiFailed) return <NotFoundPage />;
     if (!bikeData.id) return null;
 
     console.log(bikeData)
-    const latestLocation = bikeData.location.id ? bikeData.location : bikeData.location[0];
+    const latestLocation = bikeData.location?.id ? bikeData.location : bikeData?.locations ? bikeData?.locations[0] : undefined;
 
-    let mapUrl = `https://www.google.com/maps/search/?api=1&query=${latestLocation.lat},${latestLocation.lon}`;
+    let mapUrl = `https://www.google.com/maps/search/?api=1&query=${latestLocation?.lat},${latestLocation?.lon}`;
     let mapText = 'Avaa Google Mapsissa';
 
     // Check for Apple device
     if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        mapUrl = `https://maps.apple.com/?q=${latestLocation.lat},${latestLocation.lon}`;
+        mapUrl = `https://maps.apple.com/?q=${latestLocation?.lat},${latestLocation?.lon}`;
         mapText = 'Avaa Apple Mapsissa';
     }
 
@@ -62,8 +70,8 @@ export default function BikePage({bikes}) {
             <div className="bikeHeader">
                 <div className="bikeDetails">
                     <h2>{bikeData.name}</h2>
-                    <span>{latestLocation.name}</span>
-                    <span>{formatcoords(latestLocation.lat, latestLocation.lon).format()}</span>
+                    <span>{latestLocation?.name || "Tuntematon sijainti"}</span>
+                    <span>{latestLocation?.lat ? formatcoords(latestLocation?.lat, latestLocation?.lon).format() : ""}</span>
                 </div>
                 <div>
                     <a href={mapUrl} target="_blank" rel="noreferrer">
@@ -75,14 +83,19 @@ export default function BikePage({bikes}) {
             </div>
         </Center>
         <Center wider>
-            <MapContainer center={[latestLocation.lat, latestLocation.lon]} zoom={12} scrollWheelZoom={true} className="bikeMap">
+            <MapContainer center={mapPos} zoom={12} scrollWheelZoom={true} className="bikeMap">
                 <TileLayer
+                    attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
                     url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
                 />
-                <Marker position={[latestLocation.lat, latestLocation.lon]} icon={bikeIcon}></Marker>
+                <Marker position={mapPos} icon={bikeIcon}/>
+                {(bikeData && bikeData?.locations && bikeData?.locations?.length > 0) ?
+                    <>
+                        <Polyline positions={[bikeData.locations.map(i => {return [i.lat, i.lon]})]}/>
+                    </> : ""}
             </MapContainer>
         </Center>
-        { bikeData.photos.length > 0 ? 
+        { bikeData.photos.length > 0 ?
             <>
                 <Center>
                     <h2>Kaikki kuvat</h2>
@@ -100,6 +113,6 @@ export default function BikePage({bikes}) {
                 </p>
             </Center>
         }
-        
+
     </>
 }
