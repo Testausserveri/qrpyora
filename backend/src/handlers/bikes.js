@@ -24,6 +24,8 @@ async function get(req, res, db, admin) {
                 delete i.bikeId;
                 return i;
             }).reverse();
+            // Put the damn photos in right order
+            newBike.photos = newBike.photos.reverse();
             newBike.location = newBike.locations[0] || null;
             if (newBike.location) {
                 newBike.location.bikeId=undefined;
