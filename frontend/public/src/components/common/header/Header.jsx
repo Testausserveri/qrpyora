@@ -31,10 +31,17 @@ const paths = {
     '/faq': 'UKK'
 };
 
+const noHeaderPages = [
+    /^\/bikes\/\d*\/upload$/i
+]
+
 export default function Header() {
     const { pathname } = useLocation();
+    const noHeader = noHeaderPages.some(r => r.test(pathname));
+
     return (
         <Center>
+            {noHeader ? null :
             <header>    
                 <div className="logoContainer">
                     <Link to="/">
@@ -53,6 +60,7 @@ export default function Header() {
                     </ul>
                 </nav>
             </header>
+            }
         </Center>
     );
 }
