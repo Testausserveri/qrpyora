@@ -18,7 +18,7 @@ function Photo({media, fullUrl, openInLightbox}) {
     };
 
     let imageUrl = fullUrl ? photo : api.getPhotoUrl(photo);
-    if (process.env.NODE_ENV !== 'development') imageUrl = `//images.weserv.nl/?url=${imageUrl}&w=300`;
+    if (process.env.NODE_ENV !== 'development' && !fullUrl) imageUrl = `//images.weserv.nl/?url=${imageUrl}&w=300`;
 
     const contents = <>
         {media ?
