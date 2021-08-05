@@ -11,6 +11,7 @@ export default function QRModal(props) {
     }
 
     useEffect(() => {
+        console.log(props.isOpen);
         setIsOpen(props.isOpen);
     }, [props.isOpen])
 
@@ -20,7 +21,8 @@ export default function QRModal(props) {
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 overlayClassName="ModalOverlay"
-                className="ModalContent">
+                className="ModalContent"
+                contentLabel={props.contentLabel}>
                 <h2>{props.title}</h2>
                 <hr/>
                 {props.children}

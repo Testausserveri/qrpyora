@@ -1,0 +1,9 @@
+tunnels:
+  backend:
+    proto: http
+    addr: 8777
+    bind_tls: true
+  front:
+    proto: http
+    addr: 3000
+    bind_tls: true

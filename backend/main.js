@@ -58,6 +58,7 @@ app.get('/bikes/admin/:bikeId', adminAuth, (req, res) => {bikeHandler.get(req, r
 app.delete('/pictures/:id', (req, res) => {pictureHandler.deletePicture(req, res, dbConnection)})
 app.put('/bikes/admin/:bikeId/location', adminAuth, (req, res) => {bikeHandler.putLocation(req, res, dbConnection)})
 app.delete('/location/:id', adminAuth, (req, res) => {bikeHandler.deleteLocation(req, res, dbConnection)})
+app.put('/bikes/admin/:bikeId/pictures/upload', adminAuth,  upload.single('picture'),  (req, res) => {pictureHandler.upload(req, res, dbConnection)})
 
 // Public functions
 app.use('/static', express.static(__dirname + '/static'))

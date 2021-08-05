@@ -10,6 +10,9 @@ import pin from '../../assets/pin.png';
 import PhotoGrid from '../../components/photoGrid/PhotoGrid';
 import api from "../../api/api";
 import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import FlexCenter from "../../components/common/center/FlexCenter";
+import { geolocated } from "react-geolocated";
+import QRModal from "../../components/common/modal/QRModal";
 
 const bikeIcon = new L.Icon({
     iconUrl: pin,
@@ -18,11 +21,13 @@ const bikeIcon = new L.Icon({
     iconSize: [52, 52],     
 });
 
-export default function BikePage({bikes}) {
+export default geolocated()(function BikePage({bikes, isGeolocationAvailable, coords}) {
     const { bikeId } = useParams();
     const [ bikeData, setBikeData ] = useState({});
     const [ mapPos, setMapPos] = useState([0,0]);
     const [ apiFailed, setApiFailed ] = useState(false);
+    const [ locationPrompt, setLocationPrompt ] = useState(false);
+    const [ currentlyAdding, setCurrentlyAdding ] = useState(false);
 
     // Load all bike data from server
     const loadBikeData = useCallback(async (bikeId) => {
@@ -53,8 +58,11 @@ export default function BikePage({bikes}) {
     if (apiFailed) return <NotFoundPage />;
     if (!bikeData.id) return null;
 
-    const latestLocation = bikeData.location?.id ? bikeData.location : bikeData?.locations ? bikeData?.locations[0] : undefined;
+    const addLocation = () => {
 
+    };
+
+    const latestLocation = bikeData.location?.id ? bikeData.location : bikeData?.locations ? bikeData?.locations[0] : undefined;
 
     const secretUrl = `https://qrpyora.fi/bikes/${bikeData.id}/${bikeData.secret}`
 
@@ -69,6 +77,16 @@ export default function BikePage({bikes}) {
 
     return <>
         <Center>
+            <QRModal contentLabel="LocationSelector" isOpen={locationPrompt} title={"Lisää sijainti"} action={"Lisää"} close={"Sulje"} actionCallback={addLocation} onModalClose={()=>{setLocationPrompt(false)}}>
+                {currentlyAdding===true ? <>
+                    <FlexCenter>
+                        <div className={"spinner"}/>
+                    </FlexCenter>
+                </> : <>
+                    <h1>LOOL</h1>
+                </>}
+
+            </QRModal>
             <div className="bikeHeader">
                 <div className="bikeDetails">
                     <h2>{bikeData.name}</h2>
@@ -76,13 +94,16 @@ export default function BikePage({bikes}) {
                     <span>{latestLocation?.lat ? formatcoords(latestLocation?.lat, latestLocation?.lon).format() : ""}</span>
                     <span>QR-koodin URL: <a href={secretUrl}>{secretUrl}</a></span>
                 </div>
-                <div>
+                <FlexCenter>
                     <a href={mapUrl} target="_blank" rel="noreferrer">
-                        <button>
+                        <button disabled={true}>
                             <span>{mapText}</span>
                         </button>
                     </a>
-                </div>
+                    <button disabled={!isGeolocationAvailable} onClick={() => {setLocationPrompt(true)}}>
+                        Lisää sijainti
+                    </button>
+                </FlexCenter>
             </div>
         </Center>
         <Center wider>
@@ -118,4 +139,4 @@ export default function BikePage({bikes}) {
         }
         
     </>
-}
+})
