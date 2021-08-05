@@ -4,7 +4,11 @@ import './ImageUploader.css';
 import api from '../../api/api';
 
 import ImageBlobReduce from "image-blob-reduce";
-const reduce = ImageBlobReduce(); // kiitos antti
+import Pica from "pica";
+
+const pica = Pica({ features: ["js", "wasm", "cib"] });
+const reduce = new ImageBlobReduce({ pica });
+
 
 export default function ImageUploader({bikeId, secret, onAdded}) {
     const inputFile = useRef(null);
