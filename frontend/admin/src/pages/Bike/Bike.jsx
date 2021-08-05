@@ -27,7 +27,7 @@ export default geolocated()(function BikePage({bikes, isGeolocationAvailable, co
     const [ mapPos, setMapPos] = useState([0,0]);
     const [ apiFailed, setApiFailed ] = useState(false);
     const [ locationPrompt, setLocationPrompt ] = useState(false);
-    const [ currentlyAdding, setCurrentlyAdding ] = useState(false);
+    const [ currentlyAdding ] = useState(false);
 
     // Load all bike data from server
     const loadBikeData = useCallback(async (bikeId) => {
@@ -83,7 +83,7 @@ export default geolocated()(function BikePage({bikes, isGeolocationAvailable, co
                         <div className={"spinner"}/>
                     </FlexCenter>
                 </> : <>
-                    <h1>LOOL</h1>
+                    <h1>TEST1234</h1>
                 </>}
 
             </QRModal>
