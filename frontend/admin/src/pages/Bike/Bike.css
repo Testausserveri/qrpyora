@@ -3,10 +3,6 @@
     justify-content: space-between;
 }
 
-.bikeHeader button {
-    height: 100%;
-}
-
 .bikeDetails {
     display: flex;
     flex-direction: column;
@@ -38,4 +34,29 @@
     .bikeDetails span {
         color: rgba(225, 225, 225, 0.82);
     }
+}
+
+.iconButton {
+    margin-bottom: 0;
+    margin-right: 4px;
+}
+
+.locationItem {
+    display: flex;
+    flex-direction: row;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.locationItem > *:not(.iconButton) {
+    font-size: small;
+    margin: 2px;
+    flex: 1 1;
+}
+
+.locationItem > .iconButton {
+    width: min-content;
+    background-color: #e1e1e1;
+    padding: 0.5rem;
 }

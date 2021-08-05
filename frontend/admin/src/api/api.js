@@ -1,8 +1,8 @@
 import Auth from './auth'
 import config from './config'
-console.log(process.env.NODE_ENV);
 const env = process.env.NODE_ENV==='development' || false;
 const apiServer = env ? config.apiEndpoint : '/api';
+const imgServer = env ? config.apiEndpoint : window.location.origin;
 
 
 const getAuthHeaders = (auth) => {
@@ -23,7 +23,6 @@ async function getAllBikes() {
     const response = await fetch(`${apiServer}/bikes`).then(res => res.json());
 
     if (!response.status) return [];
-    console.log(response.bikes);
     return response.bikes;
 }
 
@@ -44,8 +43,35 @@ async function deletePicture(id) {
     return response.status;
 }
 
+async function deleteBike(id) {
+    const response = await fetch(`${apiServer}/bikes/admin/${id}`, {method: 'DELETE', headers: getAuthentication()}).then(res => res.json());
+    return response.status;
+}
+
+
+async function addLocation(bikeId, location) {
+    let auth = getAuthentication();
+    auth.set("accept", "application/json");
+    auth.set("content-type", "application/json");
+    const response = await fetch(`${apiServer}/bikes/admin/${bikeId}/location`, {method: 'PUT', headers: auth, body: JSON.stringify(location)}).then(res => res.json());
+    return response.status;
+}
+
+async function addBike(bike) {
+    let auth = getAuthentication();
+    auth.set("accept", "application/json");
+    auth.set("content-type", "application/json");
+    const response = await fetch(`${apiServer}/bikes`, {method: 'PUT', headers: auth, body: JSON.stringify(bike)}).then(res => res.json());
+    return response.status;
+}
+
+async function deleteLocation(id) {
+    const response = await fetch(`${apiServer}/location/${id}`, {method: 'DELETE', headers: getAuthentication()}).then(res => res.json());
+    return response.status;
+}
+
 function getPhotoUrl(photoId) {
-    return `${apiServer}/static/${photoId}`;
+    return `${imgServer}/uploads/${photoId}`;
 }
 
 const api = {
@@ -53,7 +79,11 @@ const api = {
     getBike,
     getPhotoUrl,
     checkAuth,
-    deletePicture
+    deletePicture,
+    addLocation,
+    deleteLocation,
+    addBike,
+    deleteBike
 };
 
 export default api;

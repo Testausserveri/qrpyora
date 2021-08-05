@@ -24,13 +24,6 @@ function ScrollToTop() {
 function App() {
   const [bikes, setBikes] = useState([]);
   const [ongoingSignIn, setOngoingSignIn] = useState(false);
-  console.log('tests', [
-    auth.getAuth()===null,
-    auth.getAuth(),
-    JSON.parse(localStorage.getItem('auth')),
-    localStorage.getItem('auth')
-  ]);
-  
   const [passwordPrompt, setPasswordPrompt] = useState(auth.getAuth()===null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
@@ -68,7 +61,7 @@ function App() {
           <ScrollToTop />
           <Header />
           <Switch>
-            <Route exact path="/" render={() => <GalleryPage bikes={bikes} />}/>
+            <Route exact path="/" render={() => <GalleryPage bikes={bikes} refreshCallback={loadBikes} />}/>
             <Route path="/bikes/:bikeId" render={() => <BikePage bikes={bikes} />} />
             <Route path='*' exact={true} render={() => <NotFoundPage />} />
           </Switch>

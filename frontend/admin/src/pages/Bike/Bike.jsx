@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import Center from "../../components/common/center/Center";
 import { useParams } from 'react-router-dom';
 import './Bike.css';
@@ -13,6 +13,8 @@ import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
 import FlexCenter from "../../components/common/center/FlexCenter";
 import { geolocated } from "react-geolocated";
 import QRModal from "../../components/common/modal/QRModal";
+import {MdAdd, MdDelete, MdList} from "react-icons/all";
+import { useHistory } from "react-router-dom";
 
 const bikeIcon = new L.Icon({
     iconUrl: pin,
@@ -27,7 +29,13 @@ export default geolocated()(function BikePage({bikes, isGeolocationAvailable, co
     const [ mapPos, setMapPos] = useState([0,0]);
     const [ apiFailed, setApiFailed ] = useState(false);
     const [ locationPrompt, setLocationPrompt ] = useState(false);
-    const [ currentlyAdding ] = useState(false);
+    const [ locationListPrompt, setLocationListPrompt ] = useState(false);
+    const [ currentlyAdding, setCurrentlyAdding ] = useState(false);
+    const [ locListLoading, setLocListLoading ] = useState(false);
+    const markerRef = useRef(null)
+    const [ currentlyDeleting, setCurrentlyDeleting ] = useState(false);
+    const [ bikeDelete, setBikeDelete ] = useState(false);
+    const history = useHistory();
 
     // Load all bike data from server
     const loadBikeData = useCallback(async (bikeId) => {
@@ -58,9 +66,38 @@ export default geolocated()(function BikePage({bikes, isGeolocationAvailable, co
     if (apiFailed) return <NotFoundPage />;
     if (!bikeData.id) return null;
 
-    const addLocation = () => {
-
+    const addLocation = async () => {
+        setCurrentlyAdding(true);
+        let result = await api.addLocation(bikeData.id, {lat: markerRef.current._latlng.lat, lon: markerRef.current._latlng.lng});
+        setCurrentlyAdding(false);
+        if (result) {
+            setLocationPrompt(false);
+            loadBikeData(bikeId);
+        }
     };
+
+    const deleteLocation = async (location) => {
+        setLocListLoading(true);
+        let result = await api.deleteLocation(location.id);
+        setLocListLoading(result);
+        if (result) {
+            await loadBikeData(bikeId);
+            setLocListLoading(false);
+        }
+    }
+
+    const handleDelete = async () => {
+        setBikeDelete(true);
+    }
+    const confirmedDelete = async () => {
+        setCurrentlyDeleting(true);
+        let result = await api.deleteBike(bikeData.id);
+        setCurrentlyDeleting(result);
+        setBikeDelete(!result);
+        if (result) {
+            history.push("/", {update: true});
+        }
+    }
 
     const latestLocation = bikeData.location?.id ? bikeData.location : bikeData?.locations ? bikeData?.locations[0] : undefined;
 
@@ -77,15 +114,57 @@ export default geolocated()(function BikePage({bikes, isGeolocationAvailable, co
 
     return <>
         <Center>
+            <QRModal isOpen={bikeDelete} title={"Poista pyörä"} action={"Poista"} close={"Peruuta"} actionCallback={confirmedDelete} onModalClose={()=>{setBikeDelete(false)}}>
+                {currentlyDeleting===true ? <>
+                    <FlexCenter>
+                        <div className={"spinner"}/>
+                    </FlexCenter>
+                </> : <>
+                    <p>Olet poistamassa pyörää {bikeData ? bikeData.name : "Tuntematon"} <b>PYSYVÄSTI</b>! Oletko varma?</p>
+                </>}
+            </QRModal>
             <QRModal contentLabel="LocationSelector" isOpen={locationPrompt} title={"Lisää sijainti"} action={"Lisää"} close={"Sulje"} actionCallback={addLocation} onModalClose={()=>{setLocationPrompt(false)}}>
                 {currentlyAdding===true ? <>
                     <FlexCenter>
                         <div className={"spinner"}/>
                     </FlexCenter>
                 </> : <>
-                    <h1>TEST1234</h1>
+                    {coords ? <>
+                        <MapContainer center={[coords.latitude, coords.longitude]} zoom={12} scrollWheelZoom={true} className="bikeMap mapSelector">
+                            <TileLayer
+                                attribution='&copy; Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'
+                                url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+                            />
+                            <Marker position={[coords.latitude, coords.longitude]} draggable={true} ref={markerRef}/>
+                        </MapContainer>
+                    </> : <h3>Salli sijainnin käyttöoikeudet</h3>}
+
                 </>}
 
+            </QRModal>
+            <QRModal contentLabel="LocationList" isOpen={locationListPrompt} title={"Sijainnit"} close={"Sulje"} onModalClose={()=>{setLocationListPrompt(false)}}>
+                {locListLoading===true ? <>
+                    <FlexCenter>
+                        <div className={"spinner"}/>
+                    </FlexCenter>
+                </> : <FlexCenter><ul>
+                    {bikeData && bikeData.locations ?
+                        bikeData.locations.map(location => (
+                            <>
+                                <li className={"locationItem"}>
+                                    <span>{location?.lat ? formatcoords(location?.lat, location?.lon).format() : ""}</span>
+                                    <span>{location?.name || "Tuntematon sijainti"}</span>
+                                    <button className={"iconButton"} onClick={()=>{deleteLocation(location)}}>
+                                        <MdDelete/>
+                                    </button>
+                                </li>
+                                <hr/>
+                            </>
+
+                        ))
+                        : <h3>Ei sijainteja lisätty</h3>
+                    }
+                </ul></FlexCenter>}
             </QRModal>
             <div className="bikeHeader">
                 <div className="bikeDetails">
@@ -93,16 +172,24 @@ export default geolocated()(function BikePage({bikes, isGeolocationAvailable, co
                     <span>{latestLocation?.name || "Tuntematon sijainti"}</span>
                     <span>{latestLocation?.lat ? formatcoords(latestLocation?.lat, latestLocation?.lon).format() : ""}</span>
                     <span>QR-koodin URL: <a href={secretUrl}>{secretUrl}</a></span>
+                    <button className={"actionButton"} onClick={() => {handleDelete()}}>
+                        <MdDelete/>
+                    </button>
                 </div>
                 <FlexCenter>
-                    <a href={mapUrl} target="_blank" rel="noreferrer">
+                    <a href={mapUrl} target="_blank" rel="noreferrer" style={{marginBottom: '0.5rem'}}>
                         <button disabled={true}>
                             <span>{mapText}</span>
                         </button>
                     </a>
-                    <button disabled={!isGeolocationAvailable} onClick={() => {setLocationPrompt(true)}}>
-                        Lisää sijainti
-                    </button>
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                        <button className={"iconButton"} disabled={!isGeolocationAvailable} onClick={() => {setLocationPrompt(true)}}>
+                            <MdAdd/>
+                        </button>
+                        <button className={"iconButton"} disabled={!isGeolocationAvailable} onClick={() => {setLocationListPrompt(true)}}>
+                            <MdList/>
+                        </button>
+                    </div>
                 </FlexCenter>
             </div>
         </Center>
