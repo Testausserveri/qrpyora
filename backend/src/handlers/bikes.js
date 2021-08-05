@@ -23,8 +23,8 @@ async function get(req, res, db, admin) {
                 i.bikeId=undefined;
                 delete i.bikeId;
                 return i;
-            });
-            newBike.location = newBike.location[0] || null;
+            }).reverse();
+            newBike.location = newBike.locations[0] || null;
             if (newBike.location) {
                 newBike.location.bikeId=undefined;
                 delete newBike.location.bikeId;

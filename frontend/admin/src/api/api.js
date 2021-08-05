@@ -1,6 +1,7 @@
 import Auth from './auth'
 import config from './config'
-const env = process.env.NODE_ENV==='dev' || false;
+console.log(process.env.NODE_ENV);
+const env = process.env.NODE_ENV==='development' || false;
 const apiServer = env ? config.apiEndpoint : '/api';
 
 
@@ -35,7 +36,7 @@ async function getBike(bikeId) {
     const response = await fetch(`${apiServer}/bikes/admin/${bikeId}`, {headers: getAuthentication()}).then(res => res.json());
     
     if (!response.status) return {};
-    return response.bike;
+    return response;
 }
 
 async function deletePicture(id) {

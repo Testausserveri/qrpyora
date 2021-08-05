@@ -9,6 +9,7 @@ import api from './api/api';
 import auth from './api/auth';
 import QRModal from "./components/common/modal/QRModal";
 import FlexCenter from "./components/common/center/FlexCenter";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -63,6 +64,7 @@ function App() {
           <Switch>
             <Route exact path="/" render={() => <GalleryPage bikes={bikes} />}/>
             <Route path="/bikes/:bikeId" render={() => <BikePage bikes={bikes} />} />
+            <Route path='*' exact={true} render={() => <NotFoundPage />} />
           </Switch>
           <QRModal isOpen={passwordPrompt} title={"Kirjaudu sisään"} action={"Kirjaudu"} actionCallback={signIn} onModalClose={()=>{setPasswordPrompt(false)}}>
             {ongoingSignIn===true ? <>

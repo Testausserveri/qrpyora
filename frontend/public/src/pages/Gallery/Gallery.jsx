@@ -16,12 +16,8 @@ function BikeCard({data}) {
             <div className="bikeCard" style={{'--photo-count': bike.photosCount - 4}}>
                 <PhotoGrid 
                     photos={bike.photos} columns={2} disableLightbox />
-                {bike.location ?
-                    <>
-                        <h3>{bike.name}</h3>
-                        <span>{bike.location.name}</span>
-                    </>
-                : null}
+                    <h3>{bike.name}</h3>
+                    <span>{bike.location?.name || "Sijaintia ei asetettu"}</span>
             </div>
         </Link>
     )

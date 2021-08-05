@@ -1,5 +1,5 @@
 import config from './config'
-const env = process.env.NODE_ENV==='dev' || false;
+const env = process.env.NODE_ENV==='development' || false;
 const apiServer = env ? config.apiEndpoint : '/api';
 
 async function getAllBikes() {
