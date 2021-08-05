@@ -1,5 +1,9 @@
 const superagent = require('superagent');
 
+// Note from Esinko
+// This function is *weird* no idea what it does, but it *needs* error handling.
+// Somebody fix this please...
+
 function nominatimReserveSearchPlaceName(lat, lon) {
     return superagent.get(global.nominatimUrl+`/reverse?lat=${parseFloat(lat)}&lon=${parseFloat(lon)}&accept-language=fi&format=json`)
         .then(res => {

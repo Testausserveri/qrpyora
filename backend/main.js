@@ -1,18 +1,22 @@
+// Setup environment
 if (!process.env.MYSQL_PASSWORD) require('dotenv').config({ path: '../.env' });
-console.log(process.env)
 
+// Dependencies
 const express = require("express");
-const {Database} = require("./db/db");
-
-const adminConfig = JSON.parse(process.env.ADMIN);
-
-const bodyParser = require('body-parser');
-const port = process.env.PORT || 8000;
 const cors = require('cors');
 const multer = require("multer");
 const rateLimit = require("express-rate-limit");
-let upload = multer();
+const { Database } = require("./db/db");
 const basicAuth = require('express-basic-auth');
+
+// Internal dependencies
+const pictureHandler = require('./src/handlers/picture')
+const bikeHandler = require('./src/handlers/bikes')
+
+// General configuration
+const adminConfig = JSON.parse(process.env.ADMIN);
+const port = process.env.PORT || 8000;
+const upload = multer();
 const dbConnection = new Database(
     process.env.MYSQL_NAME, 
     process.env.MYSQL_USERNAME, 
@@ -20,21 +24,18 @@ const dbConnection = new Database(
     process.env.MYSQL_HOST
 );
 
-const pictureHandler = require('./src/handlers/picture')
-const bikeHandler = require('./src/handlers/bikes')
-
-app = express();
-app.use(bodyParser.json());
+// Webserver confirmation
+const app = express();
+app.use(express.json());
 app.use(cors());
 
-global.staticPath = __dirname+'/static';
-global.nominatimUrl = process.env.NOMINATIM_URL;
-
-
 const imageRateLimit = rateLimit({
-    windowMs: 2 * 60 * 1000, // 1 min
+    windowMs: 1 /* minutes */ * 60 * 1000,
     max: 5,
-    message: {status: false, cause: "Too many requests, try again later."}
+    message: {
+        status: false, 
+        cause: "Too many requests, try again later."
+    }
 });
 
 const adminAuth = basicAuth({
@@ -45,28 +46,32 @@ const adminAuth = basicAuth({
     }
 });
 
-// Admin functions
-app.put('/bikes', adminAuth, (req, res) => {bikeHandler.put(req, res, dbConnection)})
-app.get('/bikes/admin', adminAuth, (req, res) => {bikeHandler.list(req, res, dbConnection, true)})
-app.delete('/bikes/admin/:bikeId', (req, res) => {bikeHandler.deleteBike(req, res, dbConnection)})
-app.get('/bikes/admin/:bikeId', adminAuth, (req, res) => {bikeHandler.get(req, res, dbConnection, true)})
-app.delete('/pictures/:id', (req, res) => {pictureHandler.deletePicture(req, res, dbConnection)})
-app.put('/bikes/admin/:bikeId/location', adminAuth, (req, res) => {bikeHandler.putLocation(req, res, dbConnection)})
-app.delete('/location/:id', adminAuth, (req, res) => {bikeHandler.deleteLocation(req, res, dbConnection)})
-app.put('/bikes/admin/:bikeId/pictures/upload', adminAuth,  upload.single('picture'),  (req, res) => {pictureHandler.upload(req, res, dbConnection)})
+// Globals setup
+global.staticPath = __dirname+'/static';
+global.nominatimUrl = process.env.NOMINATIM_URL;
 
-// Public functions
+
+// Webserver admin functions
+app.put('/bikes', adminAuth, (req, res) => bikeHandler.put(req, res, dbConnection))
+app.get('/bikes/admin', adminAuth, (req, res) => bikeHandler.list(req, res, dbConnection, true))
+app.delete('/bikes/admin/:bikeId', (req, res) => bikeHandler.deleteBike(req, res, dbConnection))
+app.get('/bikes/admin/:bikeId', adminAuth, (req, res) => bikeHandler.get(req, res, dbConnection, true))
+app.delete('/pictures/:id', (req, res) => pictureHandler.deletePicture(req, res, dbConnection))
+app.put('/bikes/admin/:bikeId/location', adminAuth, (req, res) => bikeHandler.putLocation(req, res, dbConnection))
+app.delete('/location/:id', adminAuth, (req, res) => bikeHandler.deleteLocation(req, res, dbConnection))
+app.put('/bikes/admin/:bikeId/pictures/upload', adminAuth,  upload.single('picture'),  (req, res) => pictureHandler.upload(req, res, dbConnection))
+
+// Webserver public functions
 app.use('/uploads', express.static(__dirname + '/static'))
-app.get('/bikes/:bikeId/pictures', (req, res) => {pictureHandler.list(req, res, dbConnection)})
-app.get('/bikes', (req, res) => {bikeHandler.list(req, res, dbConnection)})
-app.get('/bikes/:bikeId', (req, res) => {bikeHandler.get(req, res, dbConnection)})
-app.get('/bikes/:bikeId/all', (req, res) => {bikeHandler.get(req, res, dbConnection)})
-app.put('/bikes/:bikeId/pictures/upload', imageRateLimit,  upload.single('picture'),  (req, res) => {pictureHandler.upload(req, res, dbConnection)})
+app.get('/bikes/:bikeId/pictures', (req, res) => pictureHandler.list(req, res, dbConnection))
+app.get('/bikes', (req, res) => bikeHandler.list(req, res, dbConnection))
+app.get('/bikes/:bikeId', (req, res) => bikeHandler.get(req, res, dbConnection))
+app.get('/bikes/:bikeId/all', (req, res) => bikeHandler.get(req, res, dbConnection))
+app.put('/bikes/:bikeId/pictures/upload', imageRateLimit,  upload.single('picture'),  (req, res) => pictureHandler.upload(req, res, dbConnection))
 
-
-app.get('*', function(req, res){
-    res.status(404).json({'status': false, 'cause': "not found"});
-});
+app.use((req, res) => {
+    res.status(404).send(JSON.stringify({status: false, cause: 'Not found'}))
+})
 
 
 dbConnection.connect().then(() => {

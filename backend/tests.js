@@ -1,4 +1,3 @@
-
 const locationClient = require('./src/location/client');
 
 const config = require("./config.json");
