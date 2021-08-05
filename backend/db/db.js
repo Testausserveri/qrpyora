@@ -97,6 +97,7 @@ class Database {
                     {
                         model: this.models.photos,
                         as: 'photos',
+                        order: [["id", "DESC"]],
                         attributes: {exclude: includeSecret ? [] : ['updatedAt', 'bikeId']},
                     },
                 ],
@@ -169,6 +170,7 @@ class Database {
 
     getPhotosForBike(bikeId) {
         return this.models.photos.findAll({
+            order: [["id", "DESC"]],
             where: {
                 bikeId
             }
