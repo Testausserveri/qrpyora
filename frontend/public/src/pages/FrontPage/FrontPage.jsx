@@ -9,6 +9,20 @@ import horseImage from '../../assets/horse.png';
 import PhotoGrid from "../../components/photoGrid/PhotoGrid";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link } from 'react-router-dom';
+
+import featured1 from '../../assets/featured/1.jpg';
+import featured2 from '../../assets/featured/2.jpg';
+import featured3 from '../../assets/featured/3.jpg';
+import featured4 from '../../assets/featured/4.jpg';
+import featured5 from '../../assets/featured/5.jpg';
+import featured6 from '../../assets/featured/6.jpg';
+import featured7 from '../../assets/featured/7.jpg';
+import featured8 from '../../assets/featured/8.jpg';
+import featured9 from '../../assets/featured/9.jpg';
+import featured10 from '../../assets/featured/10.jpg';
+import featured11 from '../../assets/featured/11.jpg';
+import featured12 from '../../assets/featured/12.jpg';
+
 const bikeIcon = new L.Icon({
     iconUrl: pin,
     iconRetinaUrl: pin,
@@ -17,9 +31,9 @@ const bikeIcon = new L.Icon({
 });
 
 const featuredPhotos = [
-    '4924af86-45ec-42e9-a64e-d5eb3d5a2a7f.jpg', 'd9f73f01-995f-4352-b306-20777d8f5ef7.jpg', '360ce957-2ba6-4096-8558-126312164a4e.jpg', 'f464a6d9-d6c9-48e1-89df-a523dd9ce4a9.jpg',
-    '914c1877-d8d7-458b-b8a4-f020b13b1c1c.jpg', '68b05d0a-6965-4e2e-8528-c8c94de6febd.jpg', '947ba23e-2668-44f6-909f-635f1d02d3fe.jpg', 'fa1a273d-e564-4e95-a731-4a2d098b05b3.jpg',
-    'b29940b0-87e0-4106-bcb1-de31a625183d.jpg', '4bf933bc-5ff5-4726-9310-554253785aeb.jpg', '1dd5016d-8087-4fdb-a4fc-ce7db7a00297.jpg', '5aa4c8b7-7691-465f-8afa-cde6653391e7.jpg'
+    featured1, featured2, featured3, featured4, 
+    featured5, featured6, featured7, featured8, 
+    featured9, featured10, featured11, featured12
 ];
 
 export default function FrontPage({bikes}) {
@@ -58,7 +72,7 @@ export default function FrontPage({bikes}) {
             </div>  
         </Center>
         <Center wider>
-            <PhotoGrid photos={featuredPhotos} />
+            <PhotoGrid photos={featuredPhotos} fullUrl />
         </Center>
         <Center>
             <Link to="/gallery">
