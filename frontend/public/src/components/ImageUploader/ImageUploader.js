@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 import './ImageUploader.css';
-import { readAndCompressImage } from 'browser-image-resizer';
 import api from '../../api/api';
+
+import ImageBlobReduce from "image-blob-reduce";
+const reduce = ImageBlobReduce(); // kiitos antti
 
 export default function ImageUploader({bikeId, secret, onAdded}) {
     const inputFile = useRef(null);
@@ -16,11 +18,11 @@ export default function ImageUploader({bikeId, secret, onAdded}) {
         updateProgressBar(0);
         setProgressVisible(true);
 
-        const resizedImage = await readAndCompressImage(file, {
-            quality: 0.8,
-            maxWidth: 1500,
-            maxHeight: 1500,
-            autoRotate: true,
+        const resizedImage = await reduce.toBlob(file, {
+            max: 1500,
+            pica: {
+                quality: 2
+            }
         });
 
         const response = JSON.parse(await api.uploadPicture(bikeId, secret, resizedImage, (progress) => updateProgressBar(progress)));
