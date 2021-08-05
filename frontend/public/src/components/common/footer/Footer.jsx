@@ -2,8 +2,17 @@ import Center from "../center/Center";
 import './Footer.css';
 import testausserveriLogo from '../../../assets/testausserveri.svg';
 import { MdFavorite } from "react-icons/md";
+import { useLocation } from "react-router-dom";
+
+const noFooterPages = [
+    /^\/bikes\/\d*\/.*$/i
+]
+
 export default function Footer() {
-    return (
+    const { pathname } = useLocation();
+    const noFooter = noFooterPages.some(r => r.test(pathname));
+
+    return noFooter ? null : (
         <>
             <Center wider>
                 <hr />

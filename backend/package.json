@@ -3,6 +3,7 @@
   "description": "qrpyörä upload platform",
   "scripts": {
     "start": "node main.js",
+    "dev": "SET NODE_ENV=development&& node main.js",
     "test": "node tests.js"
   },
   "dependencies": {

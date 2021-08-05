@@ -17,8 +17,7 @@ const bikeIcon = new L.Icon({
     iconSize: [52, 52],
 });
 
-export default function BikePage({bikes}) {
-    const { bikeId } = useParams();
+export function useBikeData(bikes, bikeId) {
     const [ apiFailed, setApiFailed ] = useState(false);
     const [ bikeData, setBikeData ] = useState({});
     const [ mapPos, setMapPos] = useState([0,0]);
@@ -49,6 +48,15 @@ export default function BikePage({bikes}) {
     }, [bikes, bikeData, bikeId])
 
     useEffect(() => loadBikeData(bikeId), [bikeId, loadBikeData]);
+
+    // No idea why someone has added mapPos here,
+    // when it is available inside bikeData
+    return [bikeData, mapPos, apiFailed];
+}
+
+export default function BikePage({bikes}) {
+    const { bikeId } = useParams();
+    const [bikeData, mapPos, apiFailed] = useBikeData(bikes, bikeId);    
 
     if (apiFailed) return <NotFoundPage />;
     if (!bikeData.id) return null;

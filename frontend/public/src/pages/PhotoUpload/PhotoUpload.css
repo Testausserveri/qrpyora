@@ -1,0 +1,19 @@
+.smallPrint {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.7);
+    text-align: center;
+}
+
+.photoUploadPage .center {
+    margin-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.photoUploadPage hr {
+    margin-bottom: 2rem;
+}
+
+.photoUploadPage button {
+    margin-bottom: 0 !important;
+}

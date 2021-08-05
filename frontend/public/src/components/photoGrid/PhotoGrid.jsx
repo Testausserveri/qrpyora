@@ -16,11 +16,14 @@ function Photo({media, fullUrl, openInLightbox}) {
         photo = media.image
         video = media.video;
     };
+
+    let imageUrl = fullUrl ? photo : api.getPhotoUrl(photo);
+    if (process.env.NODE_ENV !== 'development') imageUrl = `//images.weserv.nl/?url=${imageUrl}&w=300`;
+
     const contents = <>
         {media ?
             <LazyLoad>
-                {/*change to this once in prod: <img src={`//images.weserv.nl/?url=${(fullUrl ? photo : api.getPhotoUrl(photo))}&w=300`} alt="QR-bike photo" />*/}
-                <img src={(fullUrl ? photo : `//images.weserv.nl/?url=${api.getPhotoUrl(photo)}&w=300`)} alt="QR-bike" />
+                <img src={imageUrl} alt="QR-bike photo" />
             </LazyLoad>
         :
             null

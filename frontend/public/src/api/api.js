@@ -18,6 +18,35 @@ async function getBike(bikeId) {
     return response;
 }
 
+async function uploadPicture(bikeId, secret, image, onProgress) {
+    // I tried using Fetch API for this first
+    // but currently they don't have support
+    // for reading progress yet.
+
+    return new Promise((resolve, reject) => {
+        let data = new FormData();
+        data.append('picture', image);
+        data.append('secret', secret);
+
+        let request = new XMLHttpRequest();
+        request.open('PUT', `${apiServer}/bikes/${bikeId}/pictures/upload`); 
+
+        request.upload.addEventListener('progress', function(e) {
+            let percent_completed = (e.loaded / e.total)*100;
+            onProgress(percent_completed);
+        });
+
+        // Finished
+        request.addEventListener('load', function(e) {
+            console.log(request.status);
+            console.log(request.response);
+            resolve(request.response)
+        });
+
+        request.send(data);
+    })
+}
+
 function getPhotoUrl(photoId) {
     return `${imgServer}/uploads/${photoId}`;
 }
@@ -25,7 +54,8 @@ function getPhotoUrl(photoId) {
 const api = {
     getAllBikes,
     getBike,
-    getPhotoUrl
+    getPhotoUrl,
+    uploadPicture
 };
 
 export default api;
