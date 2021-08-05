@@ -1,6 +1,6 @@
 import config from './config'
 const env = process.env.NODE_ENV==='development' || false;
-const apiServer = env ? config.apiEndpoint : (process.env.API_ENDPOINT || `/api`);
+const apiServer = env ? config.apiEndpoint : ((process.env.BASE_URL || '') + `/api`);
 
 async function getAllBikes() {
     const response = await fetch(`${apiServer}/bikes`).then(res => res.json());
@@ -18,7 +18,7 @@ async function getBike(bikeId) {
 }
 
 function getPhotoUrl(photoId) {
-    return `${apiServer}/uploads/${photoId}`;
+    return `${process.env.BASE_URL || ''}/uploads/${photoId}`;
 }
 
 const api = {
