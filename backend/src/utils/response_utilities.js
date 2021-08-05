@@ -1,6 +1,8 @@
+const { Response } = require("express")
+
 /**
  * Internal command for making JSON response
- * @param res Response object from express
+ * @param {Response} res Response object from express
  * @param statusCode HTTP Status code
  * @param status Boolean for success, true = request was successful
  * @param extra Extra data, if request needs to response any data, should be passed here
@@ -14,6 +16,5 @@ function responseStatus(res, statusCode=200, status=true, extra={}) {
 const exportObject = {
     responseStatus: responseStatus
 }
-
 
 module.exports = exportObject;
