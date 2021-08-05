@@ -86,3 +86,12 @@
         background-color: #363636;
     }
 }
+
+.titleBar {
+    display: flex;
+    flex-direction: row;
+}
+
+.titleBar > * {
+    margin: 4px;
+}

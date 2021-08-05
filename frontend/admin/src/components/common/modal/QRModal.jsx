@@ -1,34 +1,43 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Modal from 'react-modal';
 import './Modal.css'
 
 
-export default function QRModal(props) {
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+export default class QRModal extends React.Component {
 
-    const closeModal = () => {
-        setIsOpen(false);
+
+    constructor(props, context) {
+        super(props, context);
+        this.state = {modalIsOpen: props.isOpen}
     }
 
-    useEffect(() => {
-        console.log(props.isOpen);
-        setIsOpen(props.isOpen);
-    }, [props.isOpen])
 
-    return (
-        <div style={{zIndex: 5}}>
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                overlayClassName="ModalOverlay"
-                className="ModalContent"
-                contentLabel={props.contentLabel}>
-                <h2>{props.title}</h2>
-                <hr/>
-                {props.children}
-                {props.action ? <modal-button onClick={props.actionCallback}>{props.action}</modal-button> : undefined}
-                {props.close ? <modal-button onClick={closeModal}>{props.close}</modal-button>  : undefined}
-            </Modal>
+    closeModal() {
+        this.props.onModalClose();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isOpen !== this.state.modalIsOpen) {
+            this.setState({ modalIsOpen: nextProps.isOpen });
+        }
+    }
+
+    render() {
+        return (
+            <div style={{zIndex: 5}}>
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={() => {this.closeModal()}}
+                    overlayClassName="ModalOverlay"
+                    className="ModalContent"
+                    contentLabel={this.props.contentLabel}>
+                    <h2>{this.props.title}</h2>
+                    <hr/>
+                    {this.props.children}
+                    {this.props.action ? <modal-button onClick={this.props.actionCallback}>{this.props.action}</modal-button> : undefined}
+                    {this.props.close ? <modal-button onClick={() => {this.closeModal()}}>{this.props.close}</modal-button>  : undefined}
+                </Modal>
             </div>
-    );
+        );
+    }
 }

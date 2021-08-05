@@ -35,7 +35,6 @@ function Photo({photoId, onDelete, edit}) {
     )
 }
 export default function PhotoGrid({photos, columns, refreshCallback, edit}) {
-    console.log(JSON.stringify(photos))
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
     const [deleteProgress, setDeleteProgress] = useState(false);
     const [deleteId, setDeleteId] = useState(null);

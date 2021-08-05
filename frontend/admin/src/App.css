@@ -95,18 +95,22 @@ a:not(nav a) {
     position: relative;
 }
 
-input[type=text], input[type=password]{
+input[type=text],textarea, input[type=password] {
     width:100%;
     border:2px solid #aaa;
     border-radius:4px;
-    margin:8px 0;
+    margin:8px 0 !important;
     outline:none;
     padding:8px;
     box-sizing:border-box;
     transition:.3s;
 }
 
-input[type=text]:focus{
+textarea {
+    transition: 0s !important;
+}
+
+input[type=text],textarea, input[type=password]:focus{
     border-color:dodgerBlue;
     box-shadow:0 0 8px 0 dodgerBlue;
 }
@@ -177,8 +181,24 @@ input[type=text]:focus{
     -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
+.mapSelector {
+    min-width: 400px;
+}
+
 @media only screen and (max-width: 550px) {
     .bikeMap {
         height: 300px;
+        min-width: 200px;
     }
+}
+
+@media only screen and (max-width: 400px) {
+    .bikeMap {
+        min-width: 200px;
+    }
+}
+
+.actionButton {
+    width: min-content;
+    padding: 0.5rem;
 }
