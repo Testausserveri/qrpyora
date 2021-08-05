@@ -20,6 +20,8 @@ services:
         image: ghcr.io/testausserveri/qrpyora/frontend
         ports:
             - 8080:80
+        volumes:
+            - ./static/:/usr/local/apache2/htdocs/static/
         depends_on: 
             - db
             - backend
@@ -32,6 +34,7 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_HOST: ${MYSQL_HOST}
             NOMINATIM_URL: ${NOMINATIM_URL}
+            ADMIN: ${ADMIN}
         volumes:
             - ./static/:/usr/src/app/static/
         depends_on:

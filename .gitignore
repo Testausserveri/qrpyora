@@ -5,3 +5,4 @@ static
 db_data
 frontend/admin/build/
 .env
+tools/
