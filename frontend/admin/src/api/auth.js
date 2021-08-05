@@ -1,7 +1,9 @@
 
-const auth = {saveAuth: function (auth) {
+const auth = {
+    saveAuth: function (auth) {
         localStorage.setItem('auth', JSON.stringify(auth));
-    }, getAuth: function () {
+    }, 
+    getAuth: function () {
         try {
             return JSON.parse(localStorage.getItem('auth'));
         } catch (e) {

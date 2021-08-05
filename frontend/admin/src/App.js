@@ -24,7 +24,13 @@ function ScrollToTop() {
 function App() {
   const [bikes, setBikes] = useState([]);
   const [ongoingSignIn, setOngoingSignIn] = useState(false);
-  console.log(auth.getAuth()===null);
+  console.log('tests', [
+    auth.getAuth()===null,
+    auth.getAuth(),
+    JSON.parse(localStorage.getItem('auth')),
+    localStorage.getItem('auth')
+  ]);
+  
   const [passwordPrompt, setPasswordPrompt] = useState(auth.getAuth()===null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
