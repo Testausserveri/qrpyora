@@ -9,7 +9,7 @@ env:
 
 jobs:
   build-backend:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     permissions:
       contents: read
       packages: write
@@ -40,7 +40,7 @@ jobs:
           labels: ${{ steps.meta-backend.outputs.labels }}
           
   build-frontend:
-      runs-on: ubuntu-latest
+      runs-on: self-hosted
       permissions:
         contents: read
         packages: write
