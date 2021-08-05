@@ -70,7 +70,7 @@ async function deleteLocation(id) {
 }
 
 function getPhotoUrl(photoId) {
-    return `${apiServer}/static/${photoId}`;
+    return `${apiServer}/uploads/${photoId}`;
 }
 
 const api = {

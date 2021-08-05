@@ -46,7 +46,7 @@ export default function GalleryPage({bikes, refreshCallback, location}) {
     useEffect(() => {
         if (history?.location?.state?.update)
             refreshCallback();
-    }, [history?.location?.state?.update])
+    }, [history?.location?.state?.update, refreshCallback])
 
     return <>
         <QRModal isOpen={bikeAdd} title={"Lisää uusi pyörä"} action={"Lisää"} actionCallback={addBike} onModalClose={()=>{setBikeAdd(false)}}>

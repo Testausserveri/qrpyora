@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const config = {
     // For debugging purposes
-    apiEndpoint: "https://a7642b32cdfe.ngrok.io"
-}
+    apiEndpoint: "https://689b4bd09341.ngrok.io"
+};
+
+export default config;
