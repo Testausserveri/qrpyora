@@ -1,6 +1,7 @@
 import config from './config'
 const env = process.env.NODE_ENV==='development' || false;
 const apiServer = env ? config.apiEndpoint : '/api';
+const imgServer = env ? config.apiEndpoint : window.location.origin;
 
 async function getAllBikes() {
     const response = await fetch(`${apiServer}/bikes`).then(res => res.json());
@@ -18,8 +19,7 @@ async function getBike(bikeId) {
 }
 
 function getPhotoUrl(photoId) {
-    // to-do: make this work on localhost by checking for NODE_ENV (needs ngrok, so that the image proxy will reach it)
-    return `${apiServer}/uploads/${photoId}`;
+    return `${imgServer}/uploads/${photoId}`;
 }
 
 const api = {

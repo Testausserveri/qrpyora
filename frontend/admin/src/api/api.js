@@ -2,6 +2,7 @@ import Auth from './auth'
 import config from './config'
 const env = process.env.NODE_ENV==='development' || false;
 const apiServer = env ? config.apiEndpoint : '/api';
+const imgServer = env ? config.apiEndpoint : window.location.origin;
 
 
 const getAuthHeaders = (auth) => {
@@ -70,7 +71,7 @@ async function deleteLocation(id) {
 }
 
 function getPhotoUrl(photoId) {
-    return `${apiServer}/uploads/${photoId}`;
+    return `${imgServer}/uploads/${photoId}`;
 }
 
 const api = {
