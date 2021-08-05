@@ -4,12 +4,7 @@ console.log(process.env)
 const express = require("express");
 const {Database} = require("./db/db");
 
-// to-do: move this into db or create a docker data volume
-const config = {
-    "adminUsers": {
-      "admin": "admin1234"
-    }
-};
+const adminConfig = JSON.parse(process.env.ADMIN);
 
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 8000;
@@ -43,7 +38,7 @@ const imageRateLimit = rateLimit({
 });
 
 const adminAuth = basicAuth({
-    users: config.adminUsers,
+    users: adminConfig,
     challenge: true,
     unauthorizedResponse: () => {
         return {'status': false, 'cause': "Unauthorized"};
