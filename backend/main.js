@@ -46,6 +46,8 @@ const adminAuth = basicAuth({
     }
 });
 
+console.log(process.env);
+
 // Globals setup
 global.staticPath = __dirname+'/static';
 global.nominatimUrl = process.env.NOMINATIM_URL;
