@@ -13,6 +13,9 @@ function discordWebHook(url, timestamp) {
         )
         .then(res => {
             return res.status === 204;
+        }).catch(err => {
+            console.error(err.message, err.response);
+            return false;
         });
 }
 
