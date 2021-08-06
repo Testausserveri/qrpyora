@@ -46,7 +46,6 @@ const adminAuth = basicAuth({
     }
 });
 
-console.log(process.env);
 
 // Globals setup
 global.staticPath = __dirname+'/static';
