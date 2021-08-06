@@ -49,6 +49,8 @@ const adminAuth = basicAuth({
 // Globals setup
 global.staticPath = __dirname+'/static';
 global.nominatimUrl = process.env.NOMINATIM_URL;
+global.hookUrl = process.env.WEBHOOK_URL;
+global.endpointUrl = process.env.PROD_ENDPOINT;
 
 
 // Webserver admin functions
@@ -59,10 +61,10 @@ app.get('/bikes/admin/:bikeId', adminAuth, (req, res) => bikeHandler.get(req, re
 app.delete('/pictures/:id', (req, res) => pictureHandler.deletePicture(req, res, dbConnection))
 app.put('/bikes/admin/:bikeId/location', adminAuth, (req, res) => bikeHandler.putLocation(req, res, dbConnection))
 app.delete('/location/:id', adminAuth, (req, res) => bikeHandler.deleteLocation(req, res, dbConnection))
-app.put('/bikes/admin/:bikeId/pictures/upload', adminAuth,  upload.single('picture'),  (req, res) => pictureHandler.upload(req, res, dbConnection))
+app.put('/bikes/admin/:bikeId/pictures/upload', adminAuth,  upload.single('picture'),  (req, res) => pictureHandler.upload(req, res, dbConnection, false))
 
 // Webserver public functions
-if (process.env.NODE_ENV == 'development') app.use('/uploads', express.static(__dirname + '/static'))
+if (process.env.NODE_ENV === 'development') app.use('/uploads', express.static(__dirname + '/static'))
 app.get('/bikes/:bikeId/pictures', (req, res) => pictureHandler.list(req, res, dbConnection))
 app.get('/bikes', (req, res) => bikeHandler.list(req, res, dbConnection))
 app.get('/bikes/:bikeId', (req, res) => bikeHandler.get(req, res, dbConnection))
