@@ -17,3 +17,9 @@
 .photoUploadPage button {
     margin-bottom: 0 !important;
 }
+
+@media (prefers-color-scheme: dark) {
+    .smallPrint {
+        color: rgba(255,255,255,0.6);
+    }
+}

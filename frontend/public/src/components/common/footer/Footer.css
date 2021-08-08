@@ -34,6 +34,9 @@ footer {
         filter: invert(1);
     }
     .attributions {
-        color: white;
+        color: rgba(255,255,255,0.82);
+    }
+    hr {
+        border-bottom: 1px solid #333;
     }
 }

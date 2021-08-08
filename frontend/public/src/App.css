@@ -140,6 +140,7 @@ p a:hover::before, ul:not(nav ul) a:hover::before {
 }
 
 @media (prefers-color-scheme: dark) {
+    body { color: rgba(255,255,255,0.82); }
     button:not(.ReactModalPortal button):hover {
         background-color: #212121;
     }
@@ -152,12 +153,11 @@ p a:hover::before, ul:not(nav ul) a:hover::before {
     p a, ul a {
         color: rgba(255,255,255,0.82);
     }
-
-    a {
-        text-decoration: underline;
+    p a::before, ul:not(nav ul) a::before {
+        background-color: rgba(255,255,255, 0.08);
     }
 
     p a:hover::before, ul:not(nav ul) a:hover::before {
-        background-color: rgba(19, 19, 19, 0.15);
+        background-color: rgba(255,255,255, 0.15);
     }
 }
