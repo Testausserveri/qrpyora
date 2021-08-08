@@ -39,13 +39,13 @@ p, ul {
 @media (prefers-color-scheme: dark) {
     h2 {
         font-family: 'Red Rose', cursive;
-        color: #fff;
+        color: rgba(255,255,255,0.9);
         font-size: 2rem;
         margin-top: 0;
     }
 
     p, ul {
-        color: rgba(255,255,255,0.82);
+        color: rgba(255,255,255,0.72);
         font-family: 'Roboto', sans-serif;
         line-height: 1.5;
         font-size: 1.2rem;
@@ -142,7 +142,7 @@ p a:hover::before, ul:not(nav ul) a:hover::before {
 @media (prefers-color-scheme: dark) {
     body { color: rgba(255,255,255,0.82); }
     button:not(.ReactModalPortal button):hover {
-        background-color: #212121;
+        background-color: #393939;
     }
 
     button:not(.ReactModalPortal button) {

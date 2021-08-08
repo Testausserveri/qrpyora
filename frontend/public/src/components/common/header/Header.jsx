@@ -1,6 +1,5 @@
 import React from 'react';
 import './Header.css'
-import logo from '../../../assets/logo.png';
 import Center from '../center/Center';
 import {Link, useLocation} from 'react-router-dom';
 
@@ -44,7 +43,7 @@ export default function Header() {
             <header>    
                 <div className="logoContainer">
                     <Link to="/">
-                        <img src={logo} alt="QR-pyörä" />
+                        <img alt="QR-pyörä" />
                     </Link>
                 </div>
                 <nav>
