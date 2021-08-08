@@ -2,6 +2,10 @@ let responseUtils = require('../utils/response_utilities');
 const sharp = require("sharp")
 const uuid = require('uuid');
 const { Request, Response } = require('express')
+const {discordWebHook} = require('../webhook/client')
+async function triggerHook(url, timestamp) {
+    await discordWebHook(url, timestamp);
+}
 
 /**
  * Upload handler
@@ -9,7 +13,7 @@ const { Request, Response } = require('express')
  * @param {Response} res Response
  * @param {*} db Database construct
  */
-async function upload(req, res, db) {
+async function upload(req, res, db, hook=true) {
     try {
         if (req.file && req.body && req.params.bikeId) {
             const bike = await db.getBike(req.params.bikeId, true);
@@ -30,6 +34,9 @@ async function upload(req, res, db) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
             }
             await sharpImg.jpeg().toFile("./static/" + fileName);
+            if (hook) {
+                triggerHook(global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
+            }
             responseUtils.responseStatus(res, 200, true, { picture });
         } else {
             responseUtils.responseStatus(res, 400, false, { cause: 'No picture supplied in request' });

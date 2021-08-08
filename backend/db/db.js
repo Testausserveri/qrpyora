@@ -11,6 +11,8 @@ class Database {
         this.models = {}
     }
 
+
+
     async connect() {
         try {
             await this.dbSession.authenticate();
