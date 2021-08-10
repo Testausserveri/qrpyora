@@ -5,6 +5,7 @@ import { qas } from './qas';
 
 import './Faq.css';
 import { slug } from "./utils";
+import {FaGithub} from "react-icons/all";
 
 function Qa({data}) {
     return (
@@ -35,6 +36,11 @@ export default function Faq({ bikes }) {
             <div className="faqContainer">
                 {qas.map(qa => <Qa data={qa} />)}
             </div>
+        </Center>
+        <Center>
+            <p>
+                PS: QR-pyörän verkkosivut ja taustajärjestelmä ovat saatavilla avoimena lähdekoodina <a href="https://github.com/Testausserveri/qrpyora" target="_blank" rel="noreferrer"><FaGithub style={{verticalAlign: 'text-top'}}/> GitHubissa</a>.
+            </p>
         </Center>
     </>
 }

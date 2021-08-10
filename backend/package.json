@@ -1,5 +1,6 @@
 {
   "name": "qrpyora",
+  "version": "1.1.0",
   "description": "qrpyörä upload platform",
   "scripts": {
     "start": "node main.js",
