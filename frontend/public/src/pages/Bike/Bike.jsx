@@ -105,7 +105,8 @@ export default function BikePage({bikes}) {
         { bikeData.photos.length > 0 ?
             <>
                 <Center>
-                    <h2>Kaikki kuvat</h2>
+                    <h2 style={{margin: 0}}>Kaikki kuvat</h2>
+                    <p style={{margin: 0}}>{bikeData.photos.length} kuvaa</p>
                 </Center>
                 <Center wider>
                     <div className="bikePhotos">
