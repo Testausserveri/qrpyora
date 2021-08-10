@@ -29,6 +29,10 @@ async function get(req, res, db, admin) {
             newBike.photos = newBike.photos.sort((a, b) => {
                 return parseInt(b.id) - parseInt(a.id);
             });
+            // Apparently locations have hard time to index :D
+            newBike.locations = newBike.locations.sort((a, b) => {
+                return parseInt(b.id) - parseInt(a.id);
+            });
             newBike.location = newBike.locations[0] || null;
             if (newBike.location) {
                 newBike.location.bikeId = undefined;
@@ -166,6 +170,10 @@ async function list(req, res, db, admin=false) {
         const bikes = (await db.getBikes(!admin)).map(i => {
             // Dirty hack to manipulate object
             const k = JSON.parse(JSON.stringify(i));
+            // Apparently locations have hard time to index :D
+            k.location = k.location.sort((a, b) => {
+                return parseInt(b.id) - parseInt(a.id);
+            });
             k.location = k.location[0] || null;
             if (k.location) {
                 k.location.bikeId=undefined;
