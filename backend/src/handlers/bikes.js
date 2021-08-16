@@ -1,7 +1,8 @@
 const responseUtils = require("../utils/response_utilities");
 const uuid = require("uuid");
 const locationClient = require('../location/client');
-const { Request, Response } = require('express')
+const { Request, Response } = require('express');
+const reFormatters = require('../utils/reformatters');
 
 /**
  * Get single bike using ID
@@ -19,25 +20,7 @@ async function get(req, res, db, admin) {
                 responseUtils.responseStatus(res, 404, false, { cause: 'Bike does not exist!' });
                 return;
             }
-            const newBike = JSON.parse(JSON.stringify(bike));
-            newBike.locations = newBike.location.map(i => {
-                i.bikeId = undefined;
-                delete i.bikeId;
-                return i;
-            }).reverse();
-            // Put the damn photos in right order
-            newBike.photos = newBike.photos.sort((a, b) => {
-                return parseInt(b.id) - parseInt(a.id);
-            });
-            // Apparently locations have hard time to index :D
-            newBike.locations = newBike.locations.sort((a, b) => {
-                return parseInt(b.id) - parseInt(a.id);
-            });
-            newBike.location = newBike.locations[0] || null;
-            if (newBike.location) {
-                newBike.location.bikeId = undefined;
-                delete newBike.location.bikeId;
-            }
+            const newBike = reFormatters.reFormatBike(bike);
             responseUtils.responseStatus(res, 200, true, { bike: newBike });
         } else {
             responseUtils.responseStatus(res, 400, false, { cause: 'No bikeId supplied in request' });

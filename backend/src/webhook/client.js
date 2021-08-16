@@ -1,6 +1,8 @@
 const superagent = require('superagent');
+const reFormatters = require("../utils/reformatters");
 
 function discordWebHook(bike, url, timestamp) {
+    const newBike = reFormatters.reFormatBike(bike);
     return superagent.post(global.hookUrl)
         .send({
                 "embeds": [{
@@ -8,7 +10,7 @@ function discordWebHook(bike, url, timestamp) {
                         "url": url
                     },
                     "timestamp": timestamp,
-                    "description": `**${bike.name}**, sijainti: ${bike.location.name}`
+                    "description": `**${newBike.name}**, sijainti: ${newBike.location.name}`
                 }]
             }
         )
