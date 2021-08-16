@@ -1,6 +1,6 @@
 
-async function reFormatBike(bike) {
-    const newBike = JSON.parse(JSON.stringify(bike));
+function reFormatBike(bike) {
+    let newBike = JSON.parse(JSON.stringify(bike));
     newBike.locations = newBike.location.map(i => {
         i.bikeId = undefined;
         delete i.bikeId;
