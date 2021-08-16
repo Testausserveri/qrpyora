@@ -3,8 +3,8 @@ const sharp = require("sharp")
 const uuid = require('uuid');
 const { Request, Response } = require('express')
 const {discordWebHook} = require('../webhook/client')
-async function triggerHook(url, timestamp) {
-    await discordWebHook(url, timestamp);
+async function triggerHook(bike, url, timestamp) {
+    await discordWebHook(bike, url, timestamp);
 }
 
 /**
@@ -35,7 +35,7 @@ async function upload(req, res, db, hook=true) {
             }
             await sharpImg.jpeg().toFile("./static/" + fileName);
             if (hook) {
-                triggerHook(global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
+                triggerHook(bike, global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
             }
             responseUtils.responseStatus(res, 200, true, { picture });
         } else {

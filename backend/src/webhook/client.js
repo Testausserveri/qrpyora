@@ -1,13 +1,14 @@
 const superagent = require('superagent');
 
-function discordWebHook(url, timestamp) {
+function discordWebHook(bike, url, timestamp) {
     return superagent.post(global.hookUrl)
         .send({
                 "embeds": [{
                     "image": {
                         "url": url
                     },
-                    "timestamp": timestamp
+                    "timestamp": timestamp,
+                    "description": `**${bike.name}**, sijainti: ${bike.location.name}`
                 }]
             }
         )
