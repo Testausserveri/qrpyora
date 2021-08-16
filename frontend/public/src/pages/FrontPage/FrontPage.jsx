@@ -40,7 +40,7 @@ export default function FrontPage({bikes}) {
     const history = useHistory();
     return <>
         <Center wider>
-            <MapContainer center={[61.0379992, 25.6290388]} zoom={6} scrollWheelZoom={false} className="bikeMap">
+            <MapContainer center={[61.0379992, 25.6290388]} zoom={6} scrollWheelZoom={true} className="bikeMap">
                 <TileLayer
                    
                     url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
