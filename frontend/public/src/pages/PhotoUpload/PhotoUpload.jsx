@@ -25,6 +25,7 @@ export default function PhotoUpload({bikes}) {
 
     return <div className="photoUploadPage">
         <Center>
+            <h2>Ota selfie pyörän kanssa ja lisää kuva</h2>
             <ImageUploader bikeId={bikeId} secret={secret} onAdded={(url) => addPhoto(url)} />
             <p className="smallPrint">
             Ladatut kuvat julkaistaan lisenssillä <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fi">CC0 1.0</a>.
