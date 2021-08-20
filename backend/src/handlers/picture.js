@@ -1,6 +1,7 @@
 let responseUtils = require('../utils/response_utilities');
 const sharp = require("sharp")
 const uuid = require('uuid');
+const path = require("path");
 const { Request, Response } = require('express')
 const {discordWebHook} = require('../webhook/client')
 async function triggerHook(bike, url, timestamp) {
@@ -33,7 +34,7 @@ async function upload(req, res, db, hook=true) {
             if (metadata.width > 1500 || metadata.height > 1500) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
             }
-            await sharpImg.jpeg().toFile("./static/" + fileName);
+            await sharpImg.jpeg().toFile(path.join(global.staticPath, fileName));
             if (hook) {
                 triggerHook(bike, global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
             }
@@ -75,6 +76,23 @@ async function list(req, res, db) {
 }
 
 /**
+ * List all pictures for all bikes in the database
+ * @param {Request} req Incoming request
+ * @param {Response} res Response
+ * @param {*} db Database construct 
+ */
+ async function listAll(req, res, db) {
+    try {
+        const pictures = await db.getAllPhotos();
+        responseUtils.responseStatus(res, 200, true, { pictures });
+    } catch (e) {
+        const errorUid = uuid.v4();
+        console.error(errorUid, ":", e);
+        responseUtils.responseStatus(res, 500, false, { cause: 'Internal server error, id: ' + errorUid })
+    }
+}
+
+/**
  * Delete a picture
  * @param {Request} req Incoming request
  * @param {Response} res Response
@@ -105,5 +123,6 @@ async function deletePicture(req, res, db) {
 module.exports = {
     upload,
     list,
+    listAll,
     deletePicture
 }

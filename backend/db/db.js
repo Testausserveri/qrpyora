@@ -179,6 +179,20 @@ class Database {
         })
     }
 
+    getAllPhotos() {
+        return this.models.photos.findAll({
+            order: [["id", "DESC"]],
+            include: [
+                {
+                    model: this.models.bikes,
+                    as: 'bike',
+                    attributes: ['id', 'name']
+                }
+            ],
+            attributes: ['filename']
+        })
+    }
+
 }
 
 module.exports = {
