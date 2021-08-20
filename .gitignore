@@ -7,3 +7,4 @@ frontend/admin/build/
 .env
 tools/
 .idea/
+.docker.env
