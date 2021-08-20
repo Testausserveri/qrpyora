@@ -34,7 +34,7 @@ export default function PhotoUpload({bikes}) {
         {bikeData.photos ? 
         <Center wider>
             <div className="bikePhotos">
-                <PhotoGrid photos={[...newPhotos, ...bikeData.photos.map(p => ({image: p.fileName}))]}/>
+                <PhotoGrid photos={[...newPhotos, ...bikeData.photos.map(p => p.fileName)].map(p => ({image: p}))}/>
             </div>
         </Center>
         : null }
