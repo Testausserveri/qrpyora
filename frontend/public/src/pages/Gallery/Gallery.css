@@ -1,7 +1,7 @@
 .bikeGridView {
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 @media only screen and (max-width: 550px) {
@@ -13,6 +13,7 @@
 }
 
 .bikeCard {
+    flex: 1;
     background-color: #fff;
     padding: 1rem;
     border-radius: 8px;
@@ -31,12 +32,14 @@
     color: rgba(0,0,0,0.82);
     font-size: 1.7rem;
     margin: 0.5rem 0 0 0;
+    text-align: center;
 }
 
 .bikeCard span {
     font-family: 'Roboto', sans-serif;
     color: rgba(0,0,0,0.65);
     margin-top: 0.2rem;
+    text-align: center;
 }
 
 .bikeCard:hover {

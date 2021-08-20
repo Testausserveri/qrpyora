@@ -13,7 +13,7 @@ function BikeCard({data}) {
     if (bike.photos.length !== 4) bike.photos = [...bike.photos, ...Array(4 - bike.photos.length).fill(null)];
 
     return (
-        <Link to={`/bikes/${bike.id}`}>
+        <Link to={`/bikes/${bike.id}`} style={{display: 'flex'}}>
             <div className="bikeCard" style={{'--photo-count': bike.photosCount - 4}}>
                 <PhotoGrid 
                     photos={bike.photos.map(p => ({image: p}))} columns={2} disableLightbox />
