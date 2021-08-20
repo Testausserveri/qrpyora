@@ -11,6 +11,14 @@ async function getAllBikes() {
     return response.bikes;
 }
 
+async function getAllPhotos() {
+    const response = await fetch(`${apiServer}/gallery`).then(res => res.json());
+
+    if (!response.status) return [];
+    console.log(response.pictures);
+    return response.pictures;
+}
+
 async function getBike(bikeId) {
     const response = await fetch(`${apiServer}/bikes/${bikeId}`).then(res => res.json());
     
@@ -55,7 +63,8 @@ const api = {
     getAllBikes,
     getBike,
     getPhotoUrl,
-    uploadPicture
+    uploadPicture,
+    getAllPhotos
 };
 
 export default api;

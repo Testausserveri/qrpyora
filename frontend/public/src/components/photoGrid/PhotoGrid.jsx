@@ -7,52 +7,54 @@ import { MdPlayArrow } from 'react-icons/md';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-function Photo({media, fullUrl, openInLightbox}) {
-    let photo = media;
-    let video;
-
-    if (media?.video) {
-        photo = media.image
-        video = media.video;
-    };
-
-    let imageUrl = fullUrl ? photo : api.getPhotoUrl(photo);
+function Photo({media, openInLightbox}) {
+    const fullUrl = media?.image?.startsWith('http') || media?.image?.startsWith('/static/media/') || null;
+    let imageUrl = fullUrl ? media.image : api.getPhotoUrl(media?.image);
     if (process.env.NODE_ENV !== 'development' && !fullUrl) imageUrl = `//images.weserv.nl/?url=${imageUrl}&w=300`;
 
     const contents = <>
-        {media ?
+        {media?.image ?
             <LazyLoad>
                 <img src={imageUrl} alt="QR-bike photo" />
             </LazyLoad>
         :
             null
         }
-        {video ?
+        {media?.video ?
             <div className="videoCover">
                 <MdPlayArrow />
             </div>
         : null}
+        {media?.bike ?
+            <Link to={`/bikes/${media.bike.id}`} className="sourceBike">{media.bike.name}</Link>
+        : null}
     </>;
 
-    if (!video) {
+    if (!media?.video) {
         return <div className={"photo" + (!media ? " emptyPhoto" : "") + (!openInLightbox ? " disabledLightbox" : "")} onClick={openInLightbox ? () => openInLightbox() : () => {}}>{contents}</div>
     } else {
-        return <a target="_blank" rel="noreferrer" href={video} className={"photo" + (!media ? " emptyPhoto" : "")}>{contents}</a>
+        return <a target="_blank" rel="noreferrer" href={media.video} className={"photo" + (!media ? " emptyPhoto" : "")}>{contents}</a>
     }
 }
-export default function PhotoGrid({photos, columns, fullUrl, disableLightbox}) {
+
+/**
+ * Photo grid component
+ * @property {object} props - React props
+ * @property {integer} columns - Grid column amount
+ * @property {boolean} disableLightbox - Disable lightbox for photo grid
+ */
+export default function PhotoGrid({photos, columns, disableLightbox}) {
+    console.log(photos)
     const [photoIndex, setPhotoIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const photoUrls = photos.map((media) => {
-        if (!media) return null;
+    
+    // Format photo URLs for the lightbox only. The lightbox wants just an array of image url strings.
+    const lightboxPhotoUrls = photos.map((media) => {
+        if (!media?.image) return null; // -- or maybe this should return a placeholder image to keep the order? ... if any problems will be caused
 
-        let url;
-        if (media?.video) {
-            url = media.image
-        } else {
-            url = (media.startsWith('/static/media/') ? media : api.getPhotoUrl(media))
-        }
+        const url = (media.image.startsWith('/static/media/') ? media.image : api.getPhotoUrl(media.image))
 
         return url;
     });
@@ -67,20 +69,20 @@ export default function PhotoGrid({photos, columns, fullUrl, disableLightbox}) {
         <>
             <div className="photoGrid" style={columns ? {gridTemplateColumns: `${'1fr '.repeat(columns)}`}: null}>
                 {photos.map((photo, index) => (
-                    <Photo key={photo} media={photo} fullUrl={fullUrl} openInLightbox={(!disableLightbox ? () => viewLightbox(index) : null)} />
+                    <Photo key={photo} media={photo} openInLightbox={(!disableLightbox ? () => viewLightbox(index) : null)} />
                 ))}
             </div>
             {isOpen && (
             <Lightbox
-                mainSrc={photoUrls[photoIndex]}
-                nextSrc={photoUrls[(photoIndex + 1) % photoUrls.length]}
-                prevSrc={photoUrls[(photoIndex + photoUrls.length - 1) % photoUrls.length]}
+                mainSrc={lightboxPhotoUrls[photoIndex]}
+                nextSrc={lightboxPhotoUrls[(photoIndex + 1) % lightboxPhotoUrls.length]}
+                prevSrc={lightboxPhotoUrls[(photoIndex + lightboxPhotoUrls.length - 1) % lightboxPhotoUrls.length]}
                 onCloseRequest={() => setIsOpen(false)}
                 onMovePrevRequest={() =>
-                    setPhotoIndex((photoIndex + photoUrls.length - 1) % photoUrls.length)
+                    setPhotoIndex((photoIndex + lightboxPhotoUrls.length - 1) % lightboxPhotoUrls.length)
                 }
                 onMoveNextRequest={() =>
-                    setPhotoIndex((photoIndex + 1) % photoUrls.length)
+                    setPhotoIndex((photoIndex + 1) % lightboxPhotoUrls.length)
                 }
             />
             )}

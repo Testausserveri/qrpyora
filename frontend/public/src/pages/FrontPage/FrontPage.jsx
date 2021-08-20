@@ -34,7 +34,7 @@ const featuredPhotos = [
     featured1, featured2, featured3, featured4, 
     featured5, featured6, featured7, featured8, 
     featured9, featured10, featured11, featured12
-];
+].map(p => ({image: p}));
 
 export default function FrontPage({bikes}) {
     const history = useHistory();

@@ -64,7 +64,7 @@ export const qas = [
             <p>
                 Odotimme myöhään yöhön päästäksemme siirtämään QR-pyörän sen ensimmäiseen sijaintiin. Hauska juttu ensimmäiseltä ajomatkalta: luultavasti Hobbitti-liikkeen omistaja ajoi autolla vierestä autolla ja huudahti hidastaen autoansa keskellä tietä “kenenkä Bitcoin-lompakko tuohon on merkitty :D”!
             </p>
-            <PhotoGrid photos={[aImage, bImage]} columns={2} fullUrl />
+            <PhotoGrid photos={[{image: aImage}, {image: bImage}]} columns={2} fullUrl />
         </>
     }
 ];
