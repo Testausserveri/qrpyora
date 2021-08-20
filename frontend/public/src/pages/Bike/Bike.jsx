@@ -110,7 +110,7 @@ export default function BikePage({bikes}) {
                 </Center>
                 <Center wider>
                     <div className="bikePhotos">
-                        <PhotoGrid photos={bikeData.photos.map(p => p.fileName)}/>
+                        <PhotoGrid photos={bikeData.photos.map(p => ({image: p.fileName}))}/>
                     </div>
                 </Center>
             </>
