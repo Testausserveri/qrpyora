@@ -61,7 +61,7 @@
     transform: translate(-50%, -50%);
 
     font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
+    font-size: 1.6rem;
 }
 .bikeCard .photoGrid .photo:not(.emptyPhoto):nth-child(4)::after {
     z-index: 2;
