@@ -11,6 +11,8 @@ RUN apk add --no-cache python3 && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     rm -r /root/.cache
 
+RUN apk add --update alpine-sdk
+
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install
