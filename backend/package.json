@@ -19,6 +19,7 @@
     "sequelize": "^6.6.5",
     "sharp": "^0.28.3",
     "superagent": "^6.1.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "instagram-private-api": "^1.45.1"
   }
 }

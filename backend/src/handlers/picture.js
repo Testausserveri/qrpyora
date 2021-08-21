@@ -4,6 +4,9 @@ const uuid = require('uuid');
 const path = require("path");
 const { Request, Response } = require('express')
 const {discordWebHook} = require('../webhook/client')
+const instagramClient = require('../instagram/client');
+const reFormatters = require("../utils/reformatters");
+const fs = require('fs');
 async function triggerHook(bike, url, timestamp) {
     await discordWebHook(bike, url, timestamp);
 }
@@ -18,6 +21,7 @@ async function upload(req, res, db, hook=true) {
     try {
         if (req.file && req.body && req.params.bikeId) {
             const bike = await db.getBike(req.params.bikeId, true);
+            const reFormattedBike = reFormatters.reFormatBike(bike);
             if (bike == null) {
                 responseUtils.responseStatus(res, 404, false, { cause: 'Bike does not exist!' });
                 return;
@@ -37,6 +41,7 @@ async function upload(req, res, db, hook=true) {
             await sharpImg.jpeg().toFile(path.join(global.staticPath, fileName));
             if (hook) {
                 triggerHook(bike, global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
+                instagramClient.post(fs.readFileSync(path.join(global.staticPath, fileName)), reFormattedBike.location);
             }
             responseUtils.responseStatus(res, 200, true, { picture });
         } else {

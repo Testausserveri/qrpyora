@@ -37,6 +37,8 @@ services:
             ADMIN: ${ADMIN}
             WEBHOOK_URL: ${WEBHOOK_URL}
             PROD_ENDPOINT: ${PROD_ENDPOINT}
+            INSTAGRAM_USER: ${INSTAGRAM_USER}
+            INSTAGRAM_PASS: ${INSTAGRAM_PASS}
         volumes:
             - ./static/:/usr/src/app/static/
         depends_on:
