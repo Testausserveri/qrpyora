@@ -58,9 +58,9 @@ global.endpointUrl = process.env.PROD_ENDPOINT;
 // Webserver admin functions
 app.put('/bikes', adminAuth, (req, res) => bikeHandler.put(req, res, dbConnection))
 app.get('/bikes/admin', adminAuth, (req, res) => bikeHandler.list(req, res, dbConnection, true))
-app.delete('/bikes/admin/:bikeId', (req, res) => bikeHandler.deleteBike(req, res, dbConnection))
+app.delete('/bikes/admin/:bikeId', adminAuth, (req, res) => bikeHandler.deleteBike(req, res, dbConnection))
 app.get('/bikes/admin/:bikeId', adminAuth, (req, res) => bikeHandler.get(req, res, dbConnection, true))
-app.delete('/pictures/:id', (req, res) => pictureHandler.deletePicture(req, res, dbConnection))
+app.delete('/pictures/:id', adminAuth, (req, res) => pictureHandler.deletePicture(req, res, dbConnection))
 app.put('/bikes/admin/:bikeId/location', adminAuth, (req, res) => bikeHandler.putLocation(req, res, dbConnection))
 app.delete('/location/:id', adminAuth, (req, res) => bikeHandler.deleteLocation(req, res, dbConnection))
 app.put('/bikes/admin/:bikeId/pictures/upload', adminAuth,  upload.single('picture'),  (req, res) => pictureHandler.upload(req, res, dbConnection, false))
