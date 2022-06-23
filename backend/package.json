@@ -8,18 +8,20 @@
     "test": "node tests.js"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "express-rate-limit": "^5.3.0",
+    "form-data": "^4.0.0",
+    "instagram-private-api": "^1.45.1",
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
     "react-image-lightbox": "^5.1.4",
     "sequelize": "^6.6.5",
     "sharp": "^0.28.3",
     "superagent": "^6.1.0",
-    "uuid": "^8.3.2",
-    "instagram-private-api": "^1.45.1"
+    "uuid": "^8.3.2"
   }
 }
