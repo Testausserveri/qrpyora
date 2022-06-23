@@ -1,5 +1,8 @@
 version: "2"
 
+networks:
+  blur:
+
 services:
     db:
         image: mariadb
@@ -39,8 +42,15 @@ services:
             PROD_ENDPOINT: ${PROD_ENDPOINT}
             INSTAGRAM_USER: ${INSTAGRAM_USER}
             INSTAGRAM_PASS: ${INSTAGRAM_PASS}
+        networks:
+            - blur
         volumes:
             - ./static/:/usr/src/app/static/
         depends_on:
             - db
+        restart: unless-stopped
+    blur:
+        image: ghcr.io/testausserveri/qrpyora-blur/qrpyora-blur
+        networks:
+            - blur
         restart: unless-stopped
