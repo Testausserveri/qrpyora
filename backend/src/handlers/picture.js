@@ -42,10 +42,13 @@ async function upload(req, res, db, hook=true) {
             const picture = await db.addPicture(fileName, req.params.bikeId);
             const metadata = await sharp(buffer).metadata();
             let sharpImg = sharp(Buffer.from(blurResponse.body, 'binary'))
+            let sharpOgImg = sharp(buffer)
             if (metadata.width > 1500 || metadata.height > 1500) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
+                sharpOgImg = sharpOgImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
             }
             await sharpImg.jpeg().toFile(path.join(global.staticPath, fileName));
+            await sharpOgImg.jpeg().toFile(path.join(global.staticPath, `original_${fileName}`));
             if (hook) {
                 triggerHook(bike, global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
                 instagramClient.post(fs.readFileSync(path.join(global.staticPath, fileName)), reFormattedBike.location);
