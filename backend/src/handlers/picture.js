@@ -7,8 +7,7 @@ const {discordWebHook} = require('../webhook/client')
 const instagramClient = require('../instagram/client');
 const reFormatters = require("../utils/reformatters");
 const fs = require('fs');
-const axios = require('axios');
-const FormData = require('form-data');
+const superagent = require('superagent');
 async function triggerHook(bike, url, timestamp) {
     await discordWebHook(bike, url, timestamp);
 }
@@ -33,18 +32,16 @@ async function upload(req, res, db, hook=true) {
                 return;
             }
             const { buffer } = req.file;
-            const formData = new FormData();
-            formData.append('qrcode', buffer, { contentType: 'image/jpeg', filename: "qrpyora.jpg" });
             const fileName = uuid.v4() + '.jpg';
-            const uploadResponse = await axios.post(process.env.BLUR_URI || 'http://blur:3000/blur', formData, {
-              headers: {
-                'Content-Type': `multipart/form-data; boundary=${formData._boundary}`
-              },
-              responseType: 'arraybuffer'
-            });
+            const blurResponse = await superagent
+              .post('http://localhost:3333/blur')
+              .attach('qrcode', buffer, 'qrpyora.jpg')
+              .set('accept', 'image/jpeg')
+              .buffer(true)
+              .parse(superagent.parse.image);
             const picture = await db.addPicture(fileName, req.params.bikeId);
             const metadata = await sharp(buffer).metadata();
-            let sharpImg = sharp(Buffer.from(uploadResponse.data, 'binary'))
+            let sharpImg = sharp(Buffer.from(blurResponse.body, 'binary'))
             if (metadata.width > 1500 || metadata.height > 1500) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
             }
