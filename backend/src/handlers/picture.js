@@ -31,24 +31,42 @@ async function upload(req, res, db, hook=true) {
                 responseUtils.responseStatus(res, 401, false, { cause: 'Invalid secret!' });
                 return;
             }
+            
             const { buffer } = req.file;
             const fileName = uuid.v4() + '.jpg';
-            const blurResponse = await superagent
-              .post('http://blur:3000/blur')
-              .attach('qrcode', buffer, 'qrpyora.jpg')
-              .set('accept', 'image/jpeg')
-              .buffer(true)
-              .parse(superagent.parse.image);
+
+            // Try to blur the image
+            let imageBuffer;
+            try {
+                imageBuffer = (await superagent
+                .post('http://blur:3000/blur')
+                .attach('qrcode', buffer, 'qrpyora.jpg')
+                .set('accept', 'image/jpeg')
+                .buffer(true)
+                .parse(superagent.parse.image)).body;
+            } catch (e) {
+                console.log(`Couldn't blur the image, because ${e.message}. Continuing with unblurred image.`)
+                imageBuffer = buffer
+            }
+
+            // Save picture info to database
             const picture = await db.addPicture(fileName, req.params.bikeId);
-            const metadata = await sharp(buffer).metadata();
-            let sharpImg = sharp(Buffer.from(blurResponse.body, 'binary'))
+
+            // Set maximum dimensions for the image and save
+            let sharpImg = sharp(Buffer.from(imageBuffer, 'binary'))
+            const metadata = sharpImg.metadata();
             if (metadata.width > 1500 || metadata.height > 1500) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
             }
             await sharpImg.jpeg().toFile(path.join(global.staticPath, fileName));
+            
+            // Execute hooks
             if (hook) {
                 triggerHook(bike, global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
-                instagramClient.post(fs.readFileSync(path.join(global.staticPath, fileName)), reFormattedBike.location);
+
+                if (process.env.INSTAGRAM_USER && process.env.INSTAGRAM_PASS) {
+                    instagramClient.post(fs.readFileSync(path.join(global.staticPath, fileName)), reFormattedBike.location);
+                }
             }
             responseUtils.responseStatus(res, 200, true, { picture });
         } else {
