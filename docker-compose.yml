@@ -50,7 +50,7 @@ services:
             - db
         restart: unless-stopped
     blur:
-        image: ghcr.io/testausserveri/qrpyora-blur/qrpyora-blur
+        image: raikasdev/qrpyora-blur
         networks:
             - blur
         restart: unless-stopped
