@@ -31,7 +31,7 @@ export default function Footer() {
                             <li>QR-pyörän kuvat: <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fi">CC0 1.0</a></li>
                             <li>Karttadata: <a href="https://openstreetmap.org">OpenStreetMap</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a></li>
                             <li>Karttagrafiikka: <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. </li>
-                            <li><span style={{color: 'red'}}><MdFavorite /></span> Tehneet: Mikael, Toni, Ruben</li>
+                            <li><span style={{color: 'red'}}><MdFavorite /></span> Tehneet: Mikael, Toni, Ruben, Roni</li>
                         </ul>
                     </div>
                 </footer>
