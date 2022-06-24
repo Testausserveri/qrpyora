@@ -33,16 +33,21 @@ async function upload(req, res, db, hook=true) {
             }
             const { buffer } = req.file;
             const fileName = uuid.v4() + '.jpg';
-            const blurResponse = await superagent
-              .post('http://blur:3000/blur')
-              .attach('qrcode', buffer, 'qrpyora.jpg')
-              .set('accept', 'image/jpeg')
-              .buffer(true)
-              .parse(superagent.parse.image);
+            let imageBlurred;
+            try {
+                imageBlurred = Buffer.from((await superagent
+                    .post('http://blur:3000/blur')
+                    .attach('qrcode', buffer, 'qrpyora.jpg')
+                    .set('accept', 'image/jpeg')
+                    .buffer(true)
+                    .parse(superagent.parse.image)).body, 'binary');
+            } catch (e) {
+                imageBlurred = buffer;
+            }
             const picture = await db.addPicture(fileName, req.params.bikeId);
             const metadata = await sharp(buffer).metadata();
-            let sharpImg = sharp(Buffer.from(blurResponse.body, 'binary'))
-            let sharpOgImg = sharp(buffer)
+            let sharpImg = sharp(imageBlurred);
+            let sharpOgImg = sharp(buffer);
             if (metadata.width > 1500 || metadata.height > 1500) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
                 sharpOgImg = sharpOgImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
