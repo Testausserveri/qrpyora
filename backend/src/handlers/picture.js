@@ -7,6 +7,7 @@ const {discordWebHook} = require('../webhook/client')
 const instagramClient = require('../instagram/client');
 const reFormatters = require("../utils/reformatters");
 const fs = require('fs');
+const superagent = require('superagent');
 async function triggerHook(bike, url, timestamp) {
     await discordWebHook(bike, url, timestamp);
 }
@@ -30,18 +31,44 @@ async function upload(req, res, db, hook=true) {
                 responseUtils.responseStatus(res, 401, false, { cause: 'Invalid secret!' });
                 return;
             }
+            
             const { buffer } = req.file;
             const fileName = uuid.v4() + '.jpg';
+            // Try to blur the image
+            let imageBlurred;
+            try {
+                imageBlurred = Buffer.from((await superagent
+                    .post('http://blur:3000/blur')
+                    .attach('qrcode', buffer, 'qrpyora.jpg')
+                    .set('accept', 'image/jpeg')
+                    .buffer(true)
+                    .parse(superagent.parse.image)).body, 'binary');
+            } catch (e) {
+                console.log(`Couldn't blur the image, because ${e.message}. Continuing with unblurred image.`)
+                imageBlurred = buffer;
+            }
+
+            // Save picture info to database
             const picture = await db.addPicture(fileName, req.params.bikeId);
+
+            // Set maximum dimensions for the image and save
             const metadata = await sharp(buffer).metadata();
-            let sharpImg = sharp(buffer)
+            let sharpImg = sharp(imageBlurred);
+            let sharpOgImg = sharp(buffer);
             if (metadata.width > 1500 || metadata.height > 1500) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
+                sharpOgImg = sharpOgImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
             }
             await sharpImg.jpeg().toFile(path.join(global.staticPath, fileName));
+            await sharpOgImg.jpeg().toFile(path.join(global.staticPath, `original_${fileName}`));
+            
+            // Execute hooks
             if (hook) {
                 triggerHook(bike, global.endpointUrl+'/uploads/'+fileName, new Date().toISOString());
-                instagramClient.post(fs.readFileSync(path.join(global.staticPath, fileName)), reFormattedBike.location);
+
+                if (process.env.INSTAGRAM_USER && process.env.INSTAGRAM_PASS) {
+                    instagramClient.post(fs.readFileSync(path.join(global.staticPath, fileName)), reFormattedBike.location);
+                }
             }
             responseUtils.responseStatus(res, 200, true, { picture });
         } else {
