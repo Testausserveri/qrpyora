@@ -34,7 +34,7 @@ async function upload(req, res, db, hook=true) {
             const { buffer } = req.file;
             const fileName = uuid.v4() + '.jpg';
             const blurResponse = await superagent
-              .post('http://localhost:3333/blur')
+              .post('http://blur:3000/blur')
               .attach('qrcode', buffer, 'qrpyora.jpg')
               .set('accept', 'image/jpeg')
               .buffer(true)
