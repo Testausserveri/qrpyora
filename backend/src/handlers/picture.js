@@ -34,31 +34,33 @@ async function upload(req, res, db, hook=true) {
             
             const { buffer } = req.file;
             const fileName = uuid.v4() + '.jpg';
-
             // Try to blur the image
-            let imageBuffer;
+            let imageBlurred;
             try {
-                imageBuffer = (await superagent
-                .post('http://blur:3000/blur')
-                .attach('qrcode', buffer, 'qrpyora.jpg')
-                .set('accept', 'image/jpeg')
-                .buffer(true)
-                .parse(superagent.parse.image)).body;
+                imageBlurred = Buffer.from((await superagent
+                    .post('http://blur:3000/blur')
+                    .attach('qrcode', buffer, 'qrpyora.jpg')
+                    .set('accept', 'image/jpeg')
+                    .buffer(true)
+                    .parse(superagent.parse.image)).body, 'binary');
             } catch (e) {
                 console.log(`Couldn't blur the image, because ${e.message}. Continuing with unblurred image.`)
-                imageBuffer = buffer
+                imageBlurred = buffer;
             }
 
             // Save picture info to database
             const picture = await db.addPicture(fileName, req.params.bikeId);
 
             // Set maximum dimensions for the image and save
-            let sharpImg = sharp(Buffer.from(imageBuffer, 'binary'))
-            const metadata = sharpImg.metadata();
+            const metadata = await sharp(buffer).metadata();
+            let sharpImg = sharp(imageBlurred);
+            let sharpOgImg = sharp(buffer);
             if (metadata.width > 1500 || metadata.height > 1500) {
                 sharpImg = sharpImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
+                sharpOgImg = sharpOgImg.resize(metadata.width > metadata.height ? 1500 : undefined, metadata.height > metadata.width ? 1500 : undefined);
             }
             await sharpImg.jpeg().toFile(path.join(global.staticPath, fileName));
+            await sharpOgImg.jpeg().toFile(path.join(global.staticPath, `original_${fileName}`));
             
             // Execute hooks
             if (hook) {
