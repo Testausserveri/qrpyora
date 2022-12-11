@@ -22,6 +22,7 @@ import featured9 from '../../assets/featured/9.jpg';
 import featured10 from '../../assets/featured/10.jpg';
 import featured11 from '../../assets/featured/11.jpg';
 import featured12 from '../../assets/featured/12.jpg';
+import InfoBox from "../../components/infoBox/InfoBox";
 
 const bikeIcon = new L.Icon({
     iconUrl: pin,
@@ -40,6 +41,9 @@ export default function FrontPage({bikes}) {
     const history = useHistory();
     return <>
         <Center wider>
+            <InfoBox>
+                Projekti on päättynyt: pyöriä ei enää ole mutta valokuvat ovat nähtävissä. Säilytämme sivuston historiaa varten.
+            </InfoBox>
             <MapContainer center={[61.0379992, 25.6290388]} zoom={6} scrollWheelZoom={true} className="bikeMap">
                 <TileLayer
                    
