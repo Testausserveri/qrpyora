@@ -47,7 +47,7 @@ export default function FrontPage({bikes}) {
             <MapContainer center={[61.0379992, 25.6290388]} zoom={6} scrollWheelZoom={true} className="bikeMap">
                 <TileLayer
                    
-                    url="https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+                    url="https://watercolormaps.collection.cooperhewitt.org/tile/watercolor/{z}/{x}/{y}.jpg"
                 />
 
                 {bikes.map(marker => {
