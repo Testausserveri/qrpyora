@@ -31,16 +31,21 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/testausserveri/qrpyora/backend
 
-      - name: Build and push backend Docker image
-        uses: docker/build-push-action@v2
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v4
         with:
           context: ./backend/
+          file: Dockerfile
+          no-cache: true
+          attests: type=sbom
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta-backend.outputs.tags }}
           labels: ${{ steps.meta-backend.outputs.labels }}
           
   build-frontend:
-      runs-on: self-hosted
+      runs-on: ubuntu-latest
       permissions:
         contents: read
         packages: write
@@ -75,11 +80,16 @@ jobs:
           npm i
           npm run build
           cd ../../
-          
-      - name: Build and push frontend Docker image
-        uses: docker/build-push-action@v2
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v4
         with:
           context: ./frontend/
+          file: Dockerfile
+          no-cache: true
+          attests: type=sbom
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
